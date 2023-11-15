@@ -12,7 +12,7 @@ namespace MotsGlisses
         //Méthodes
         public string toString()
         {
-
+            return null;
         }
         public void ToFile(string nomfile)
         {
@@ -24,11 +24,11 @@ namespace MotsGlisses
         }
         public object Recherche_Mot(string mot)
         {
-
+            return null;
         }
-        public void Maj_Plateau(object object)
+        public void Maj_Plateau(object obj)
         {
-
+            
         }
     }
 }

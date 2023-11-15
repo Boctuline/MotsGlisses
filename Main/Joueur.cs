@@ -22,7 +22,7 @@ namespace MotsGlisses
 		}
 		public string toString()
 		{
-
+			return null;
 		}
 		public void Add_Score(int val)
 		{
@@ -30,7 +30,7 @@ namespace MotsGlisses
 		}
 		public bool Contient(string mot)
 		{
-
+			return false;
 		}
 	}
 }
