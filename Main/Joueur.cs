@@ -11,10 +11,29 @@ namespace MotsGlisses
 
 
 		//Constructeur
-		public Joueur ()
+		public Joueur (string nom, int[] scores, string[] motsTrouves)
 		{
-
+			this.nom = nom;
+			this.scores = scores;
+			this.motsTrouves = motsTrouves;
+			scores = 0;
+			motsTrouves = null;
 		}
+        public string Nom
+        {
+            get { return nom; }
+            set { this.nom = nom; }
+        }
+        public int[] MotsTrouves
+        {
+            get { return motsTrouves; }
+            set { this.motsTrouves = motsTrouves; }
+        }
+        public int[] Scores
+        {
+            get { return scores; }
+            set { this.scores = scores; }
+        }
 		//Méthodes
 		public void Add_Mot (string mot)
 		{
@@ -22,7 +41,8 @@ namespace MotsGlisses
 		}
 		public string toString()
 		{
-			return null;
+			string a = "Le joueur " + nom + " a un score de " + scores + " avec " + motsTrouves + "comme mots trouvés";
+			return a;
 		}
 		public void Add_Score(int val)
 		{
@@ -30,7 +50,12 @@ namespace MotsGlisses
 		}
 		public bool Contient(string mot)
 		{
-			return false;
+			bool b = false;
+			foreach (string s in motsTrouves) 
+			{ 
+				if(mot == s) {  b = true; break; }
+			}
+			return b;
 		}
 	}
 }
