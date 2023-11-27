@@ -6,12 +6,12 @@ namespace MotsGlisses
 	{
 		//Attributs
 		string nom;
-		string[] motsTrouves;
-		int[] scores;
+        List<string> motsTrouves = new List<string>();
+        int[] scores;
 
 
 		//Constructeur
-		public Joueur (string nom, int[] scores, string[] motsTrouves)
+		public Joueur (string nom, int[] scores, List<string> motsTrouves)
 		{
 			this.nom = nom;
 			this.scores = scores;
@@ -24,7 +24,7 @@ namespace MotsGlisses
             get { return nom; }
             set { this.nom = value; }
         }
-        public int[] MotsTrouves
+        public List<string> MotsTrouves
         {
             get { return motsTrouves; }
             set { this.motsTrouves = value; }
