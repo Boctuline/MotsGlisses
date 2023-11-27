@@ -16,23 +16,23 @@ namespace MotsGlisses
 			this.nom = nom;
 			this.scores = scores;
 			this.motsTrouves = motsTrouves;
-			scores = 0;
+			scores = 0
 			motsTrouves = null;
 		}
         public string Nom
         {
             get { return nom; }
-            set { this.nom = nom; }
+            set { this.nom = value; }
         }
         public int[] MotsTrouves
         {
             get { return motsTrouves; }
-            set { this.motsTrouves = motsTrouves; }
+            set { this.motsTrouves = value; }
         }
         public int[] Scores
         {
             get { return scores; }
-            set { this.scores = scores; }
+            set { this.scores = value; }
         }
 		//Méthodes
 		public void Add_Mot (string mot)
@@ -46,7 +46,10 @@ namespace MotsGlisses
 		}
 		public void Add_Score(int val)
 		{
-
+			foreach(int a in scores)
+			{
+				a = a + val;
+			}
 		}
 		public bool Contient(string mot)
 		{
