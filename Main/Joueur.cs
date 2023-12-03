@@ -6,8 +6,8 @@ namespace MotsGlisses
 	{
 		//Attributs
 		string nom;
-        List<string> motsTrouves = new List<string>();
         int[] scores;
+        List<string> motsTrouves = new List<string>();
 
 
 		//Constructeur
