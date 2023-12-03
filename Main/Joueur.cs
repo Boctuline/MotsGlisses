@@ -48,7 +48,7 @@ namespace MotsGlisses
 			bool b = false;
 			foreach (string s in motsTrouves) 
 			{ 
-				if(mot == s) {  b = true;}
+				if (mot == s) b = true;
 			}
 			return b;
 		}
