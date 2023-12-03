@@ -6,17 +6,15 @@ namespace MotsGlisses
 	{
 		//Attributs
 		string nom;
-        int scores;
+        int score;
         List<string> motsTrouves = new List<string>();
 
 
 		//Constructeur
-		public Joueur (string nom, int[] scores, List<string> motsTrouves)
+		public Joueur (string nom)
 		{
 			this.nom = nom;
-			this.scores = scores;
-			this.motsTrouves = motsTrouves;
-			scores = 0;
+			score = 0;
 			motsTrouves = null;
 		}
         public string Nom
