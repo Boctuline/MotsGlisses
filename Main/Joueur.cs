@@ -35,7 +35,7 @@ namespace MotsGlisses
 		//Méthodes
 		public void Add_Mot (string mot)
 		{
-
+			motsTrouves.Add(mot);
 		}
 		public string toString()
 		{
