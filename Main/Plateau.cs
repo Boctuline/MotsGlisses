@@ -19,6 +19,15 @@ namespace MotsGlisses
         //Méthodes
         public string toString()
         {
+            string a = "";
+            for (int i = 0; i < plateau.GetLength(0); i++)
+            {
+                for (int j = 0; j < plateau.GetLength(1); j++)
+                {
+                    a += plateau[i, j] + ";";
+                }
+                Console.WriteLine();
+            }
             return null;
         }
         public void ToFile(string nomfile)
