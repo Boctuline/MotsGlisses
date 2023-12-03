@@ -16,7 +16,7 @@ namespace MotsGlisses
 			this.nom = nom;
 			this.scores = scores;
 			this.motsTrouves = motsTrouves;
-			scores = 0
+			scores = 0;
 			motsTrouves = null;
 		}
         public string Nom
