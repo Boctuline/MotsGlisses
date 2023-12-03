@@ -51,10 +51,7 @@ namespace MotsGlisses
 		}
 		public void Add_Score(int val)
 		{
-			foreach(int a in scores)
-			{
-				a = a + val;
-			}
+			this.score += val;
 		}
 		public bool Contient(string mot)
 		{
