@@ -4,11 +4,17 @@ namespace MotsGlisses
 {
     public class Plateau
     {
-        string[,] plateau;
+        char[,] plateau;
         //Constructeur
-        public Plateau()
+        public Plateau(int n = 8, int m = 8)
         {
-            char[,] plateau;
+            plateau = new char[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                }
+            }
         }
         //Méthodes
         public string toString()
