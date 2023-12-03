@@ -27,10 +27,10 @@ namespace MotsGlisses
             get { return motsTrouves; }
             set { this.motsTrouves = value; }
         }
-        public int[] Scores
+        public int Score
         {
-            get { return scores; }
-            set { this.scores = value; }
+            get { return score; }
+            set { this.score = value; }
         }
 		//Méthodes
 		public void Add_Mot (string mot)
