@@ -39,7 +39,14 @@ namespace MotsGlisses
 		}
 		public string toString()
 		{
-			string a = "Le joueur " + nom + " a un score de " + scores + " avec " + motsTrouves + "comme mots trouvés";
+			string a = "Le joueur " + nom + " a " + score + "pts et a trouvé les mots : ";
+			a += MotsTrouves[0];
+			for(int i = 1; i < MotsTrouves.Count-1; i++)
+			{
+				if (i == 1) a += " - ";
+				a += MotsTrouves[i] + " - ";
+			}
+			a += MotsTrouves[MotsTrouves.Count - 1];
 			return a;
 		}
 		public void Add_Score(int val)
