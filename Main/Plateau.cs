@@ -6,15 +6,9 @@ namespace MotsGlisses
     {
         char[,] plateau;
         //Constructeur
-        public Plateau(int n = 8, int m = 8)
+        public Plateau()
         {
-            plateau = new char[n, m];
-            for (int i = 0; i < n; i++)
-            {
-                for(int j = 0; j < m; j++)
-                {
-                }
-            }
+
         }
         //Méthodes
         public string toString()
@@ -28,7 +22,7 @@ namespace MotsGlisses
                 }
                 Console.WriteLine();
             }
-            return null;
+            return a;
         }
         public void ToFile(string nomfile)
         {
