@@ -6,7 +6,8 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
-            
+            NombreMots("Mots_Français.txt", 'x')
+
         }
     }
 }

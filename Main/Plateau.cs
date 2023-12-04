@@ -28,7 +28,7 @@ namespace MotsGlisses
                 }
                 Console.WriteLine();
             }
-            return null;
+            return a;
         }
         public void ToFile(string nomfile)
         {
