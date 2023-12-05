@@ -6,7 +6,8 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
-            
+            Plateau p = new Plateau();
+            p.toString();
         }
     }
 }
