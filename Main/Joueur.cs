@@ -45,7 +45,7 @@ namespace MotsGlisses
 		}
 		public bool Contient(string mot)
 		{
-			return motsTrouves.Contient(mot);
+			return motsTrouves.Contains(mot);
 		}
 	}
 }

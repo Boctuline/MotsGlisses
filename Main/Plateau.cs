@@ -19,7 +19,7 @@ namespace MotsGlisses
             List<char> list = new List<char>();
             try
             {
-                StreamReader sr = new StreamReader("~Fichier\Lettre.txt");
+                StreamReader sr = new StreamReader("~Fichier\\Lettre.txt");
                 string[] line = sr.ReadLine().Split(";");
                 while (line != null)
                 {
