@@ -6,17 +6,42 @@ namespace MotsGlisses
     {
         char[,] plateau;
         //Constructeur
+
+        /// <summary>
+        /// Création de plateau aléatoire
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="m"></param>
         public Plateau(int n = 8, int m = 8)
         {
+
             plateau = new char[n, m];
-            for (int i = 0; i < n; i++)
+            List<char> list = new List<char>();
+            try
             {
-                for(int j = 0; j < m; j++)
+                StreamReader sr = new StreamReader("~Fichier\Lettre.txt");
+                string[] line = sr.ReadLine().Split(";");
+                while (line != null)
                 {
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 0; j < m; j++)
+                        {
+                        }
+                    }
+                    line = sr.ReadLine().Split(";");
                 }
+                sr.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
-        //Méthodes
+        public Plateau(string namefile)
+        {
+            ToRead(namefile);
+        }
         public string toString()
         {
             string a = "";
@@ -56,11 +81,16 @@ namespace MotsGlisses
             try
             {
                 StreamReader sr = new StreamReader(nomfile);
-                string line = sr.ReadLine();
+                string[] line = sr.ReadLine().Split(";");
                 while (line != null)
                 {
-                    Console.WriteLine(line);
-                    line = sr.ReadLine();
+                    for (int i = 0; i < plateau.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < plateau.GetLength(1); j++)
+                        {
+                            plateau[i, j] = line[j];
+                        }
+                    }line = sr.ReadLine().Split(";") ;
                 }
                 sr.Close();
             }
