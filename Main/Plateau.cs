@@ -131,17 +131,18 @@ namespace MotsGlisses
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
                     ret = true;
-                    i = plateau.GetLength(0);
-                    j = k;
+                    i = 2*plateau.GetLength(0)-1;
+                    j = plateau.GetLength(1)+k;
                     for(int l = 1; l < mot.Length && ret == true; l++)
                     {
-                        if (plateau[i, (j - 1) % plateau.GetLength(1)] != mot[l] || plateau[i, (j + 1) % plateau.GetLength(1)] != mot[l] || plateau[(i + 1) % plateau.GetLength(0), j] != mot[l])
+                        if (plateau[i%plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[l] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[l] && plateau[(i - 1) % plateau.GetLength(0), j%plateau.GetLength(1)] != mot[l] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[l])
                         {
                             ret = false;
                         }
-                        else if (plateau[i, (l - 1) % plateau.GetLength(1)] != mot[l]) j--;
-                        else if (plateau[i, (l + 1) % plateau.GetLength(1)] != mot[l]) j++;
-                        else if (plateau[(i + 1) % plateau.GetLength(0), l] != mot[l]) i++;
+                        else if (plateau[i% plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[l]) j--;
+                        else if (plateau[i% plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[l]) j++;
+                        else if (plateau[(i - 1)% plateau.GetLength(0), j % plateau.GetLength(1)] == mot[l]) i--;
+                        else if (plateau[(i  + 1)% plateau.GetLength(0), j % plateau.GetLength(1)] == mot[l]) i++;
                     }
                 }
             }
