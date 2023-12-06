@@ -141,7 +141,7 @@ namespace MotsGlisses
             {
                 return false;
             }
-            mif (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i, j - 1, k + 1)) return true;
+            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i, j - 1, k + 1)) return true;
             if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i, j + 1, k + 1)) return true;
             if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i - 1, j, k + 1)) return true;
             if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i + 1, j, k + 1)) return true;
