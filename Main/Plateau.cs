@@ -47,7 +47,22 @@ namespace MotsGlisses
         /// <param name="namefile">Nom du fichier CSV</param>
         public Plateau(string namefile)
         {
-            ToRead(namefile);
+            try
+            {
+                string[] lines = File.ReadAllLines(namefile);
+                plateau = new char[lines.Length, lines[0].Split(";").Length];
+                for (int i = 0; i < plateau.GetLength(0); i++)
+                {
+                    for (int j = 0; j < plateau.GetLength(1); j++)
+                    {
+                        plateau[i, j] = char.Parse(lines[i].Split(";")[j]);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
         }
         public string toString()
         {
@@ -62,6 +77,10 @@ namespace MotsGlisses
             }
             return a;
         }
+        /// <summary>
+        /// Fonction permettant d'écrire un fichier à partir d'un plateau
+        /// </summary>
+        /// <param name="nomfile"></param>
         public void ToFile(string nomfile)
         {
             try
@@ -83,18 +102,18 @@ namespace MotsGlisses
                 Console.WriteLine("Exception: " + e.Message);
             }
         }
+        /// <summary>
+        /// Fonction permettant de lire un fichier comportant un plateau
+        /// </summary>
+        /// <param name="nomfile"></param>
         public void ToRead(string nomfile)
         {
             try
             {
                 string[] lines = File.ReadAllLines(nomfile);
-                plateau = new char[lines.Length, lines[0].Split(";").Length];
-                for (int i = 0; i < plateau.GetLength(0); i++)
+                foreach(string line in lines)
                 {
-                    for (int j = 0; j < plateau.GetLength(1); j++)
-                    {
-                        plateau[i, j] = char.Parse(lines[i].Split(";")[j]);
-                    }
+                    Console.WriteLine(line);
                 }
             }
             catch (Exception e)
@@ -102,10 +121,31 @@ namespace MotsGlisses
                 Console.WriteLine("Exception: " + e.Message);
             }
         }
-        public object Recherche_Mot(string mot)
+        public bool Recherche_Mot(string mot)
         {
+            int i,j = 0;
+            bool ret = false;
+            for(int k = 0; k < plateau.GetLength(1); k++)
+            {
 
-            return null;
+                if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
+                {
+                    ret = true;
+                    i = plateau.GetLength(0);
+                    j = k;
+                    for(int l = 1; l < mot.Length && ret == true; l++)
+                    {
+                        if (plateau[i, (j - 1) % plateau.GetLength(1)] != mot[l] || plateau[i, (j + 1) % plateau.GetLength(1)] != mot[l] || plateau[(i + 1) % plateau.GetLength(0), j] != mot[l])
+                        {
+                            ret = false;
+                        }
+                        else if (plateau[i, (l - 1) % plateau.GetLength(1)] != mot[l]) j--;
+                        else if (plateau[i, (l + 1) % plateau.GetLength(1)] != mot[l]) j++;
+                        else if (plateau[(i + 1) % plateau.GetLength(0), l] != mot[l]) i++;
+                    }
+                }
+            }
+            return ret;
         }
         public void Maj_Plateau(object obj)
         {
