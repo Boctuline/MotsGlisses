@@ -8,36 +8,43 @@ namespace MotsGlisses
         //Constructeur
 
         /// <summary>
-        /// Création de plateau aléatoire
+        /// Création de plateau aléatoire selon Lettre.txt
         /// </summary>
-        /// <param name="n"></param>
-        /// <param name="m"></param>
+        /// <param name="n">Nombre de lignes du plateau</param>
+        /// <param name="m">Nombre de colonnes du plateau</param>
         public Plateau(int n = 8, int m = 8)
         {
 
             plateau = new char[n, m];
             List<char> list = new List<char>();
+            List<char> lettres = new List<char>(26);
             try
             {
-                StreamReader sr = new StreamReader("~Fichier\\Lettre.txt");
-                string[] line = sr.ReadLine().Split(";");
-                while (line != null)
+                string[] lignes = File.ReadAllLines("..\\..\\..\\Main\\Fichiers\\Lettre.txt");
+                foreach (string ligne in lignes)
                 {
-                    for (int i = 0; i < n; i++)
-                    {
-                        for (int j = 0; j < m; j++)
-                        {
-                        }
-                    }
-                    line = sr.ReadLine().Split(";");
+                    for(int i = 0; i < int.Parse(ligne.Split(",")[1]); i++)
+                    lettres.Add(char.Parse(ligne.Split(",")[0].ToLower()));
                 }
-                sr.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            Random r = new Random();
+            int lettre;
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    plateau[i, j] = lettres[r.Next(lettres.Count)];
+                }
+            }
         }
+        /// <summary>
+        /// Génération d'un plateau à partir d'un fichier de plateau en CSV
+        /// </summary>
+        /// <param name="namefile">Nom du fichier CSV</param>
         public Plateau(string namefile)
         {
             ToRead(namefile);
@@ -51,9 +58,9 @@ namespace MotsGlisses
                 {
                     a += plateau[i, j] + ";";
                 }
-                Console.WriteLine();
+                a += "\n";
             }
-            return null;
+            return a;
         }
         public void ToFile(string nomfile)
         {
@@ -80,19 +87,15 @@ namespace MotsGlisses
         {
             try
             {
-                StreamReader sr = new StreamReader(nomfile);
-                string[] line = sr.ReadLine().Split(";");
-                while (line != null)
+                string[] lines = File.ReadAllLines(nomfile);
+                plateau = new char[lines.Length, lines[0].Split(";").Length];
+                for (int i = 0; i < plateau.GetLength(0); i++)
                 {
-                    for (int i = 0; i < plateau.GetLength(0); i++)
+                    for (int j = 0; j < plateau.GetLength(1); j++)
                     {
-                        for (int j = 0; j < plateau.GetLength(1); j++)
-                        {
-                            plateau[i, j] = line[j];
-                        }
-                    }line = sr.ReadLine().Split(";") ;
+                        plateau[i, j] = char.Parse(lines[i].Split(";")[j]);
+                    }
                 }
-                sr.Close();
             }
             catch (Exception e)
             {
