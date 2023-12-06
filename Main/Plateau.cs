@@ -137,15 +137,15 @@ namespace MotsGlisses
         public bool Recherche_Adj(string mot, int i, int j, int k = 1)
         {
                 if (k == mot.Length) return true;
-                if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
-                {
+            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
+            {
                 return false;
-                }
-                else if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k]) return Recherche_Adj(mot,i,j-1,k+1);
-                else if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k]) return Recherche_Adj(mot, i, j + 1, k + 1);
-                else if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) return Recherche_Adj(mot, i-1, j, k + 1);
-                else if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) return Recherche_Adj(mot, i+1, j, k + 1);
-                return false;
+            }
+            mif (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i, j - 1, k + 1)) return true;
+            if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i, j + 1, k + 1)) return true;
+            if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i - 1, j, k + 1)) return true;
+            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k]) if (Recherche_Adj(mot, i + 1, j, k + 1)) return true;
+            return false;
         }
         public void Maj_Plateau(object obj)
         {
