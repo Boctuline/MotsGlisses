@@ -19,13 +19,17 @@ namespace MotsGlisses
             plateau = new char[n, m];
             List<char> list = new List<char>();
             List<char> lettres = new List<char>(26);
+            List<char> lettresOcc = new List<char>(26);
             try
             {
                 string[] lignes = File.ReadAllLines("..\\..\\..\\Main\\Fichiers\\Lettre.txt");
                 foreach (string ligne in lignes)
                 {
-                    for(int i = 0; i < int.Parse(ligne.Split(",")[1]); i++)
-                    lettres.Add(char.Parse(ligne.Split(",")[0].ToLower()));
+                    for (int i = 0; i < int.Parse(ligne.Split(",")[1]); i++)
+                    {
+                        lettres.Add(char.Parse(ligne.Split(",")[0].ToLower()));
+                        lettresOcc.Add(char.Parse(ligne.Split(",")[0].ToLower()));
+                    }
                 }
             }
             catch (Exception e)
@@ -33,12 +37,15 @@ namespace MotsGlisses
                 Console.WriteLine(e.Message);
             }
             Random r = new Random();
-            int lettre;
+            char lettre;
             for(int i = 0; i < n; i++)
             {
                 for(int j = 0; j < m; j++)
                 {
-                    plateau[i, j] = lettres[r.Next(lettres.Count)];
+                    lettre = lettres[r.Next(lettres.Count)];
+                    if (!lettresOcc.Contains(lettre)) while (lettres.Contains(lettre)) lettres.Remove(lettre);
+                    plateau[i, j] = lettre;
+                    lettresOcc.Remove(plateau[i, j]);
                 }
             }
         }
