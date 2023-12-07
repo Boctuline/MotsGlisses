@@ -159,7 +159,7 @@ namespace MotsGlisses
         /// <returns></returns>
         public bool Recherche_Adj(string mot, int i, int j, int k = 1, int key = -1)
         {
-                if (k == mot.Length) return true;
+            if (k == mot.Length) return true;
             if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
             {
                 return false;
