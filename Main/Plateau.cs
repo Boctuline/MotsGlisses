@@ -3,6 +3,9 @@ using System.Net.Http.Headers;
 
 namespace MotsGlisses
 {
+    /// <summary>
+    /// Classe permettant de définir un plateau, l'afficher, et le modifier
+    /// </summary>
     public class Plateau
     {
         char[,] plateau;
@@ -167,7 +170,7 @@ namespace MotsGlisses
             if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && key != 2) if (Recherche_Adj(mot, i + 1, j, k + 1, 3)) return true;
             return false;
         }
-        public void Maj_Plateau(object obj)
+        public void Maj_Plateau(string mot)
         {
             
         }
