@@ -1,56 +1,78 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace MotsGlisses
 {
-    public class Dictionnaire
-    {
-        //Attributs
-        //Constructeur
-        public Dictionnaire()
+    
+        public class Dictionnaire(string nameFile)
         {
-        }
-        //Méthodes
-        public int NombreMots(string nomFichier, char lettre)
-        {
-            try
-            {
-                int nombreMots = 0;
-                using (StreamReader sr = new StreamReader(nomFichier))
-                {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        string[] mots = line.Split(new char[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string mot in mots)
-                        {
-                            if (mot.Length > 0 && char.ToLower(mot[0]) == char.ToLower(lettre))
-                            {
-                                nombreMots++;
-                            }
-                        }
-                    }
-                }
-                return nombreMots;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
-        }
+            List<List<string>> dictionnaire = new List<List<string>>();
+            StreamReader sReader = null;
+            try{
+            
 
-        
-        public string toString(char a)
+
+
+        }   
+        // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
+        public string ToString(char a)
         {
-            string a = "La lettre "+ a+ " apparait "+ NombreMots+ " fois."
-            return a;
+            
+            string result = "La lettre "+a+"contient " +"mots et est en français.;
+            return result;
         }
         public bool RechDichRecursif(string mot)
         {
-            return false;
+                
         }
+        public static bool RechercheDichotomique(string[] tableau, string motRecherche)
+        {
+            // Vérifie si le tableau est trié
+            Array.Sort(tableau);
+
+            int min = 0;
+            int max = tableau.Length - 1;
+
+            return RechercheDichotomiqueRecursive(tableau, motRecherche, min, max);
+        }
+
+        private static bool RechercheDichotomiqueRecursive(string[][] tableau, string motRecherche, int min, int max)
+        {
+            if (tableau == null )
+            if (tableau == null)
+            {
+                return false;
+            }
+            if (tableau.Length == 0)
+            {
+                return false;
+            }
+
+            int milieu = (min + max) / 2;
+
+            int comparison = string.Compare(tableau[milieu], motRecherche);
+
+            if (comparison == 0)
+            {
+                return true; 
+
+                return true;
+            }
+            else if (comparison > 0)
+            {
+                return RechercheDichotomiqueRecursive(tableau, motRecherche, min, milieu - 1);
+            }
+            else
+            {
+                return RechercheDichotomiqueRecursive(tableau, motRecherche, milieu + 1, max);
+            }
+        }
+
         public void Tri_Fusion()
         {
 
         }
-    }
+    
 }
