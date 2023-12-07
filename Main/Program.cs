@@ -13,6 +13,7 @@ namespace MotsGlisses
             while(true)
             {
                string rep = Console.ReadLine();
+
             }
 
         }
