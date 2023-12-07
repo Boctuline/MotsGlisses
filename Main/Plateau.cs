@@ -3,9 +3,6 @@ using System.Net.Http.Headers;
 
 namespace MotsGlisses
 {
-    /// <summary>
-    /// Classe permettant de définir un tableau, de l'afficher, et de le modifier.
-    /// </summary>
     public class Plateau
     {
         char[,] plateau;
@@ -91,7 +88,7 @@ namespace MotsGlisses
         /// <summary>
         /// Fonction permettant d'écrire un fichier à partir d'un plateau
         /// </summary>
-        /// <param name="nomfile">Nom du fichier</param>
+        /// <param name="nomfile"></param>
         public void ToFile(string nomfile)
         {
             try
@@ -116,7 +113,7 @@ namespace MotsGlisses
         /// <summary>
         /// Fonction permettant de lire un fichier comportant un plateau
         /// </summary>
-        /// <param name="nomfile">Nom du fichier</param>
+        /// <param name="nomfile"></param>
         public void ToRead(string nomfile)
         {
             try
@@ -137,18 +134,17 @@ namespace MotsGlisses
         /// </summary>
         /// <param name="mot">Mot à chercher</param>
         /// <returns></returns>
-        public List<Case> Recherche_Mot(string mot)
+        public bool Recherche_Mot(string mot)
         {
             for(int k = 0; k < plateau.GetLength(1); k++)
             {
 
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
-                    List<Case> adj = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
-                    return adj != null ? adj:null ;
+                    return Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
                 }
             }
-            return null;
+            return false;
         }
         /// <summary>
         /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
@@ -158,21 +154,18 @@ namespace MotsGlisses
         /// <param name="j">Position (colonne)</param>
         /// <param name="k">Position de la lettre dans le mot à chercher</param>
         /// <returns></returns>
-        public List<Case> Recherche_Adj(string mot, int i, int j, int k = 1, List<Case> cases = null)
+        public bool Recherche_Adj(string mot, int i, int j, int k = 1, int key = -1)
         {
-            if (cases == null) cases = new List<Case>();
-            Case case1 = new Case(i, j, plateau.GetLength(0),plateau.GetLength(1));
-            cases.Add(case1);
-            if (k == mot.Length) return cases;
+            if (k == mot.Length) return true;
             if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
             {
-                return null;
+                return false;
             }
-            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases.Contains(new Case(i, j - 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j - 1, k + 1, cases); if (adj != null) return cases; }
-            if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases.Contains(new Case(i, j + 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j + 1, k + 1, cases); if (adj != null) return cases; }
-            if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases.Contains(new Case(i - 1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j, k + 1, cases); if (adj != null) return cases; }
-            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases.Contains(new Case(i + 1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i + 1, j, k + 1, cases); if (adj != null) return cases; }
-            return null;
+            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && key != 1) if (Recherche_Adj(mot, i, j - 1, k + 1, 0)) return true;
+            if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && key != 0) if (Recherche_Adj(mot, i, j + 1, k + 1, 1)) return true;
+            if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && key != 3) if (Recherche_Adj(mot, i - 1, j, k + 1, 2)) return true;
+            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && key != 2) if (Recherche_Adj(mot, i + 1, j, k + 1, 3)) return true;
+            return false;
         }
         public void Maj_Plateau(object obj)
         {

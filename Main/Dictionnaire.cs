@@ -41,20 +41,53 @@ namespace MotsGlisses
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
         public string ToString(char a)
         {
-            return null;
+            
+            string result = "La lettre "+a+"contient "+ +"mots et est en français.;
+            return result;
         }
         public bool RechDichRecursif(string mot)
         {
-            return false;
+                
         }
         public static bool RechercheDichotomique(string[] tableau, string motRecherche)
         {
-            return false;
+            // Vérifie si le tableau est trié
+            Array.Sort(tableau);
+
+            int min = 0;
+            int max = tableau.Length - 1;
+
+            return RechercheDichotomiqueRecursive(tableau, motRecherche, min, max);
         }
 
         private static bool RechercheDichotomiqueRecursive(string[][] tableau, string motRecherche, int min, int max)
         {
-            return false;
+            if (tableau == null )
+            {
+                return false;
+            }
+            if (tableau.Length == 0)
+            {
+                return false;
+            }
+
+            int milieu = (tableau.Length) / 2;
+
+            int comparison = string.Compare(tableau[milieu], motRecherche);
+
+            if (comparison == 0)
+            {
+                return true; 
+            }
+            else if (comparison > 0)
+            {
+                return RechercheDichotomiqueRecursive(tableau, motRecherche, min, milieu - 1);
+            }
+            else
+            {
+ 
+                return RechercheDichotomiqueRecursive(tableau, motRecherche, milieu + 1, max);
+            }
         }
 
         public void Tri_Fusion()
