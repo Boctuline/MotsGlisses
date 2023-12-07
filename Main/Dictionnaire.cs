@@ -1,31 +1,34 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http.Headers;
+using System.Collections.Generic;
 
 namespace MotsGlisses
 {
+
     public class Dictionnaire
     {
-        public Dictionnaire(string[][] tab)
+        public Dictionnaire(string nameFile)
         {
-            tab = new string[26][];
-            for (int i = 0; i < 26; i++)
-            {
-                tab[i] = new string[0]; 
-            }
-        }
-        public static void ReadStringToFile(string fileName)
-        {
-
+            List<List<string>> dictionnaire = new List<List<string>>();
             StreamReader sReader = null;
+
             try
             {
-
-                sReader = new StreamReader(fileName);
+                sReader = new StreamReader(nameFile);
                 string line;
                 while ((line = sReader.ReadLine()) != null)
                 {
-                    Console.WriteLine(line);
+                    List<string> ligne = new List<string>();
+                    string[] mots = line.Split(' ');
+
+                    foreach (string mot in mots)
+                    {
+                        ligne.Add(mot);
+                    }
+                    dictionnaire.Add(ligne);
                 }
+
             }
             catch (Exception e)
             {
@@ -35,19 +38,19 @@ namespace MotsGlisses
             {
                 if (sReader != null) { sReader.Close(); }
             }
-
         }
-
+    
+      
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
         public string ToString(char a)
         {
             
-            string result = "La lettre "+a+"contient "+ +"mots et est en français.;
+            string result = "La lettre "+a+"contient " +"mots et est en français.";
             return result;
         }
         public bool RechDichRecursif(string mot)
         {
-                
+            return false;
         }
         public static bool RechercheDichotomique(string[] tableau, string motRecherche)
         {
