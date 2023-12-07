@@ -16,6 +16,7 @@ namespace MotsGlisses
                List<Case> cases = p1.Recherche_Mot(rep);
                foreach(Case case1 in cases) Console.WriteLine(case1.toString());
             }
+
         }
     }
 }
