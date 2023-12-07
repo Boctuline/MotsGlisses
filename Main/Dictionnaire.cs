@@ -5,29 +5,60 @@ using System.Net.Http.Headers;
 
 namespace MotsGlisses
 {
-    
-        public class Dictionnaire(string nameFile)
+
+    public class Dictionnaire
+    {
+        List<List<string>> dictionnaire;
+        public List<List<string>> Dico
         {
+            get { return dictionnaire; }
+            set { this.dictionnaire = value; }
+        }
+        public Dictionnaire(string nameFile) 
+        {
+
             List<List<string>> dictionnaire = new List<List<string>>();
             StreamReader sReader = null;
-            try{
-            
+            try
+            {
+                sReader = new StreamReader(nameFile);
+                string line;
+                while ((line = sReader.ReadLine()) != null)
+                {
+                    List<string> ligne = new List<string>();
+                    string[] mots = line.Split(' ');
 
+                    foreach (string mot in mots)
+                    {
+                        ligne.Add(mot);
+                    }
+                    dictionnaire.Add(ligne);
+                }
 
-
-        }   
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                if (sReader != null) { sReader.Close(); }
+            }
+        }
+       
+                 
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
         public string ToString(char a)
         {
             
-            string result = "La lettre "+a+"contient " +"mots et est en français.;
+            string result = "La lettre " + a + "contient " + "mots et est en français.";
             return result;
         }
         public bool RechDichRecursif(string mot)
         {
-                
+            return false;
         }
-        public static bool RechercheDichotomique(string[] tableau, string motRecherche)
+        /*public static bool RechercheDichotomique(string[] tableau, string motRecherche)
         {
             // Vérifie si le tableau est trié
             Array.Sort(tableau);
@@ -40,11 +71,11 @@ namespace MotsGlisses
 
         private static bool RechercheDichotomiqueRecursive(string[][] tableau, string motRecherche, int min, int max)
         {
-            if (tableau == null )
             if (tableau == null)
-            {
-                return false;
-            }
+                if (tableau == null)
+                {
+                    return false;
+                }
             if (tableau.Length == 0)
             {
                 return false;
@@ -56,7 +87,7 @@ namespace MotsGlisses
 
             if (comparison == 0)
             {
-                return true; 
+                return true;
 
                 return true;
             }
@@ -73,6 +104,6 @@ namespace MotsGlisses
         public void Tri_Fusion()
         {
 
-        }
-    
+        }*/
+    }   
 }

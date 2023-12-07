@@ -6,8 +6,8 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
-            NombreMots("Mots_Français.txt", 'x')
-
+            Dictionnaire monDictionnaire = new Dictionnaire("Mots_Français.txt");
+            List<List<string>> dico = monDictionnaire.Dico;
         }
     }
 }
