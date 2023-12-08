@@ -165,6 +165,7 @@ namespace MotsGlisses
         /// <returns></returns>
         public List<Case> Recherche_Mot(string mot)
         {
+            mot = mot.ToLower();
             for(int k = 0; k < plateau.GetLength(1); k++)
             {
 
