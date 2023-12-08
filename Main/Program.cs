@@ -27,15 +27,20 @@ namespace MotsGlisses
             Joueur j2 = new Joueur(rep);
             Joueur jactuel = j2;
             p.Afficher();
+            DateTime debut = DateTime.Now;
             while (true)
             {
+                int minutes = 4 - (DateTime.Now - debut).Minutes;
+                int secondes = 59 - (DateTime.Now - debut).Seconds;
+                Console.WriteLine("Il vous reste " + minutes + " minutes et " + secondes + " secondes avant la fin du jeu.");
                 if (jactuel == j2) jactuel = j1;
                 else jactuel = j2;
-                Console.WriteLine("Tour de " + jactuel.Nom);
+                Console.WriteLine("Tour de " + jactuel.Nom + ".\nTapez \"Skip\" pour passer.");
                 DateTime dt = DateTime.Now;
                 rep = Console.ReadLine();
                 TimeSpan now = DateTime.Now - dt;
-                if (now.Seconds > 15) Console.WriteLine("Temps écoulé ! Vous avez pris " + now.Seconds);
+                if (now.Seconds > 25) Console.WriteLine("Temps écoulé ! Vous avez pris " + now.Seconds + " secondes.");
+                if (rep.ToLower() == "skip") Console.WriteLine("Vous avez décider de passer ce tour.");
                 else
                 {
                     List<Case> cases = p.Recherche_Mot(rep);
