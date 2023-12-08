@@ -10,7 +10,7 @@ namespace MotsGlisses
             Console.WriteLine(p.toString());
             Plateau p1 = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
             Console.WriteLine(p1.toString());
-            while(true)
+            while (true)
             {
                string rep = Console.ReadLine();
                List<Case> cases = p1.Recherche_Mot(rep);

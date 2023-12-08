@@ -75,6 +75,10 @@ namespace MotsGlisses
                 Console.WriteLine("Exception: " + e.Message);
             }
         }
+        /// <summary>
+        /// Permet de convertir le plateau sous forme de string présentable
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
             string a = "";
@@ -82,11 +86,35 @@ namespace MotsGlisses
             {
                 for (int j = 0; j < plateau.GetLength(1); j++)
                 {
-                    a += plateau[i, j] + ";";
+                    a += "| " + Convert.ToString(plateau[i, j]).ToUpper() + " ";
                 }
-                a += "\n";
+                a += "|\n";
             }
             return a;
+        }
+        public void Afficher(bool color = false)
+        {
+            for (int i = 0; i < plateau.GetLength(0); i++)
+            {
+                Console.Write("_____");
+            }
+            Console.WriteLine();
+            for (int i = 0; i < plateau.GetLength(0); i++)
+            {
+                for (int j = 0; j < plateau.GetLength(1); j++)
+                {
+                    Console.Write("| ");
+                    if (color && plateau[i, j] == '*') { Console.ForegroundColor = ConsoleColor.Red; Console.Write("* "); }
+                    else if (plateau[i, j] == '*')
+                    {
+                        Console.Write("  ");
+                    }
+                    else Console.Write(Convert.ToString(plateau[i, j]).ToUpper() + " ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" ");
+                }
+                Console.WriteLine("|");
+            }
         }
         /// <summary>
         /// Fonction permettant d'écrire un fichier à partir d'un plateau
@@ -176,10 +204,15 @@ namespace MotsGlisses
             if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i+1, j - 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i+1, j - 1, k + 1, cases1); if (adj != null) return adj; }
             return null;
         }
+        /// <summary>
+        /// Permet d'éliminer les cases sélectionnés dans un premier temps, puis décale les lettres vers le bas
+        /// </summary>
+        /// <param name="cases">La listes des cases à faire disparaître</param>
         public void Maj_Plateau(Cases cases)
         {
             Console.Clear();
             char[,] plateauTemp = new char[plateau.GetLength(0), plateau.GetLength(1)];
+            //On élimine les cases contenus dans cases
             for(int i = 0;i<plateau.GetLength(0);i++)
             {
                 for(int j = 0; j < plateau.GetLength(1);j++)
@@ -188,9 +221,10 @@ namespace MotsGlisses
                     plateauTemp[i, j] = plateau[i, j];
                 }
             }
-            Console.WriteLine(this.toString());
-            int plafond = 0;
-            int c = 0;
+            this.Afficher(true);
+            int plafond;
+            int c;
+            //Décaler les cases
             for (int j = 0; j < plateau.GetLength(1);j++)
             {
                 plafond = 0;
@@ -198,10 +232,10 @@ namespace MotsGlisses
                 //On détermine la hauteur maximale d'une colonne
                 for (int k = 0; k < plateauTemp.GetLength(0); k++)
                 {
-                    if (plateauTemp[k, j] == '*') plafond++;
+                    if (plateauTemp[k, j] == ' ') plafond++;
                     else k = plateau.GetLength(0);
                 }
-                //
+                //On réalise l'écart pour la colonne j
                 for (int i = plateau.GetLength(0)-1; i >=-plateau.GetLength(0);i--)
                 {
                     //On compte le nombre d'écart à faire selon le nombre de lettres disparues
@@ -215,7 +249,14 @@ namespace MotsGlisses
                     }
                 }
             }
-            Console.WriteLine(this.toString());
+            for (int i = 0; i < plateau.GetLength(0); i++)
+            {
+                for (int j = 0; j < plateau.GetLength(1); j++)
+                {
+                    if (plateau[i,j] == '*') plateau[i, j] = ' ';
+                }
+            }
+            this.Afficher();
         }
     }
 }
