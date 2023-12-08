@@ -162,7 +162,7 @@ namespace MotsGlisses
         /// Fonction permettant de chercher si une entrée string est dans le plateau de manière adjacente
         /// </summary>
         /// <param name="mot">Mot à chercher</param>
-        /// <returns></returns>
+        /// <returns>null ou liste de cases</returns>
         public List<Case> Recherche_Mot(string mot)
         {
             mot = mot.ToLower();
@@ -200,7 +200,7 @@ namespace MotsGlisses
         /// <param name="i">Position (ligne)</param>
         /// <param name="j">Position (colonne)</param>
         /// <param name="k">Position de la lettre dans le mot à chercher</param>
-        /// <returns></returns>
+        /// <returns>null ou liste de cases</returns>
         public List<Case> Recherche_Adj(string mot, int i, int j, int k = 1, List<Case> cases = null)
         {
             if (cases == null) cases = new List<Case>(); 

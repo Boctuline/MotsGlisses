@@ -6,7 +6,8 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
-            int score;
+            int score, secondes;
+            int minutes = 5;
             Console.WriteLine("Comment voulez-vous ouvrir le plateau ?" +
                 "\n1. Plateau généré aléatoirement" +
                 "\n2. Plateau à partir d'un fichier");
@@ -28,14 +29,19 @@ namespace MotsGlisses
             Joueur jactuel = j2;
             p.Afficher();
             DateTime debut = DateTime.Now;
-            while (true)
+            while (minutes >= 0)
             {
-                int minutes = 4 - (DateTime.Now - debut).Minutes;
-                int secondes = 59 - (DateTime.Now - debut).Seconds;
+                //Vérif temps
+                Thread.Sleep(1);
+                minutes = 4 - (DateTime.Now - debut).Minutes;
+                secondes = 60 - (DateTime.Now - debut).Seconds;
                 Console.WriteLine("Il vous reste " + minutes + " minutes et " + secondes + " secondes avant la fin du jeu.");
+                //On décide du joueur
                 if (jactuel == j2) jactuel = j1;
                 else jactuel = j2;
-                Console.WriteLine("Tour de " + jactuel.Nom + ".\nTapez \"Skip\" pour passer.");
+                Console.WriteLine("Tour de " + jactuel.Nom + ".\nTapez \"Skip\" pour passer.\nVous avez 20 secondes par question.");
+
+                //Réponse du joueur
                 DateTime dt = DateTime.Now;
                 rep = Console.ReadLine();
                 TimeSpan now = DateTime.Now - dt;
@@ -47,6 +53,7 @@ namespace MotsGlisses
                     if (cases == null) Console.WriteLine("Le mot n'est pas dans le tableau");
                     else
                     {
+                        //Si le mot est correct
                         p.Maj_Plateau(new Cases(cases));
                         Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.Score(rep) + " points pour " + jactuel.Nom);
                         jactuel.Add_Score(jactuel.Score(rep));
@@ -55,6 +62,7 @@ namespace MotsGlisses
                     }
                 }
             }
+            Console.WriteLine("Le jeu est terminé !");
 
         }
     }
