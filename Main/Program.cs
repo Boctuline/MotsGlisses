@@ -11,7 +11,8 @@ namespace MotsGlisses
             int secondes = 0;
             Console.WriteLine("Comment voulez-vous ouvrir le plateau ?" +
                 "\n1. Plateau généré aléatoirement" +
-                "\n2. Plateau à partir d'un fichier");
+                "\n2. Plateau à partir d'un fichier" +
+                "\nTapez \"Skip\" pour passer.\nVous avez 20 secondes par question.");
             string rep;
             Plateau p = null;
             do
@@ -30,6 +31,7 @@ namespace MotsGlisses
             Joueur jactuel = j2;
             p.Afficher();
             DateTime debut = DateTime.Now;
+
             while (secondes >= 0)
             {
                 //Annonce du temps
@@ -37,7 +39,7 @@ namespace MotsGlisses
                 //On décide du joueur
                 if (jactuel == j2) jactuel = j1;
                 else jactuel = j2;
-                Console.WriteLine("Tour de " + jactuel.Nom + ".\nTapez \"Skip\" pour passer.\nVous avez 20 secondes par question.");
+                Console.WriteLine("Tour de " + jactuel.Nom + ".");
 
                 //Réponse du joueur
                 DateTime dt = DateTime.Now;
