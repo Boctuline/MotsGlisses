@@ -165,6 +165,7 @@ namespace MotsGlisses
         /// <returns></returns>
         public List<Case> Recherche_Mot(string mot)
         {
+            List<Case> cases = null;
             mot = mot.ToLower();
             if (mot == "giles nocturne")
             {
@@ -187,11 +188,10 @@ namespace MotsGlisses
 
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
-                    List<Case> cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
-                    if (cases != null) return cases;
+                    cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
                 }
             }
-            return null;
+            return cases;
         }
         /// <summary>
         /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
@@ -209,6 +209,7 @@ namespace MotsGlisses
             Case case1 = new Case(i,j, plateau.GetLength(0), plateau.GetLength(1));
             cases1.Add(case1);
             if (k == mot.Length) return cases1;
+            //Objet liste de case permettant de vérifier le contenu
             Cases cases2 = new Cases(cases1);
             if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i,j-1,plateau.GetLength(0),plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j - 1, k + 1,cases1); if (adj != null) return adj; }
             if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i, j + 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j + 1, k + 1,cases1); if (adj != null) return adj; }
