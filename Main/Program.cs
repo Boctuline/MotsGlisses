@@ -19,7 +19,6 @@ namespace MotsGlisses
                 else if (rep == "2") p = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
                 else Console.WriteLine("Réponse incorrecte");
             } while (rep != "1" && rep != "2");
-            p.Afficher();
             Console.WriteLine("Quel est votre nom Joueur 1 ?");
             rep = Console.ReadLine();
             Joueur j1 = new Joueur(rep);
@@ -27,6 +26,7 @@ namespace MotsGlisses
             rep = Console.ReadLine();
             Joueur j2 = new Joueur(rep);
             Joueur jactuel = j2;
+            p.Afficher();
             while (true)
             {
                 if (jactuel == j2) jactuel = j1;
@@ -35,7 +35,7 @@ namespace MotsGlisses
                 DateTime dt = DateTime.Now;
                 rep = Console.ReadLine();
                 TimeSpan now = DateTime.Now - dt;
-                if (now.Seconds > 10) Console.WriteLine("Temps écoulé !");
+                if (now.Seconds > 15) Console.WriteLine("Temps écoulé ! Vous avez pris " + now.Seconds);
                 else
                 {
                     List<Case> cases = p.Recherche_Mot(rep);
