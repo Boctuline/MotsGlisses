@@ -6,6 +6,7 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
+            int score;
             Console.WriteLine("Comment voulez-vous ouvrir le plateau ?" +
                 "\n1. Plateau généré aléatoirement" +
                 "\n2. Plateau à partir d'un fichier");
@@ -25,19 +26,28 @@ namespace MotsGlisses
             Console.WriteLine("Quel est votre nom Joueur 2 ?");
             rep = Console.ReadLine();
             Joueur j2 = new Joueur(rep);
-            DateTime dt = DateTime.Now;
+            Joueur jactuel = j2;
             while (true)
             {
-               rep = Console.ReadLine();
-               List<Case> cases = p.Recherche_Mot(rep);
-                if (cases == null) Console.WriteLine("Le mot n'est pas dans le tableau");
+                if (jactuel == j2) jactuel = j1;
+                else jactuel = j2;
+                Console.WriteLine("Tour de " + jactuel.Nom);
+                DateTime dt = DateTime.Now;
+                rep = Console.ReadLine();
+                TimeSpan now = DateTime.Now - dt;
+                if (now.Seconds > 10) Console.WriteLine("Temps écoulé !");
                 else
                 {
-                    p.Maj_Plateau(new Cases(cases));
-                    Console.WriteLine(j1.Score(rep));
-                    //Add score
-                    //Add mot
+                    List<Case> cases = p.Recherche_Mot(rep);
+                    if (cases == null) Console.WriteLine("Le mot n'est pas dans le tableau");
+                    else
+                    {
+                        p.Maj_Plateau(new Cases(cases));
+                        Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.Score(rep) + " points pour " + jactuel.Nom);
+                        jactuel.Add_Score(jactuel.Score(rep));
+                        jactuel.Add_Mot(rep);
 
+                    }
                 }
             }
 

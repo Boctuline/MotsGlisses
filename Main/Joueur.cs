@@ -8,7 +8,7 @@ namespace MotsGlisses
 		//Attributs
 		string nom;
         int score;
-        List<string> motsTrouves = new List<string>();
+        List<string> motsTrouves;
 
 
 		//Constructeur
@@ -16,7 +16,7 @@ namespace MotsGlisses
 		{
 			this.nom = nom;
 			score = 0;
-			motsTrouves = null;
+			motsTrouves = new List<string>();
 		}
         public string Nom
         {
