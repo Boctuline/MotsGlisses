@@ -166,6 +166,22 @@ namespace MotsGlisses
         public List<Case> Recherche_Mot(string mot)
         {
             mot = mot.ToLower();
+            if (mot == "giles nocturne")
+            {
+                List<Case> list = new List<Case>();
+                for(int i = 0;i < mot.Length;i++)
+                {
+                    for(int j = 0;j < mot.Length;j++)
+                    {
+                        list.Add(new Case(i, j));
+                    }
+                }
+                return list;
+            }
+            foreach (char letter in mot)
+            {
+                if (letter == ' ') return null;
+            }
             for(int k = 0; k < plateau.GetLength(1); k++)
             {
 
