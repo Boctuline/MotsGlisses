@@ -15,11 +15,16 @@ namespace MotsGlisses
             {
                 rep = Console.ReadLine();
                 if (rep == "1") p = new Plateau();
-                if (rep == "2") p = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
+                else if (rep == "2") p = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
                 else Console.WriteLine("Réponse incorrecte");
-            } while (rep != "1" || rep != "2");
+            } while (rep != "1" && rep != "2");
             p.Afficher();
-            Joueur j1 = new Joueur("Shire");
+            Console.WriteLine("Quel est votre nom Joueur 1 ?");
+            rep = Console.ReadLine();
+            Joueur j1 = new Joueur(rep);
+            Console.WriteLine("Quel est votre nom Joueur 2 ?");
+            rep = Console.ReadLine();
+            Joueur j2 = new Joueur(rep);
             DateTime dt = DateTime.Now;
             while (true)
             {
