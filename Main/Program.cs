@@ -6,8 +6,9 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
-            int score, secondes;
+            int score;
             int minutes = 5;
+            int secondes = 0;
             Console.WriteLine("Comment voulez-vous ouvrir le plateau ?" +
                 "\n1. Plateau généré aléatoirement" +
                 "\n2. Plateau à partir d'un fichier");
@@ -29,12 +30,9 @@ namespace MotsGlisses
             Joueur jactuel = j2;
             p.Afficher();
             DateTime debut = DateTime.Now;
-            while (minutes >= 0)
+            while (secondes >= 0)
             {
-                //Vérif temps
-                Thread.Sleep(1);
-                minutes = 4 - (DateTime.Now - debut).Minutes;
-                secondes = 60 - (DateTime.Now - debut).Seconds;
+                //Annonce du temps
                 Console.WriteLine("Il vous reste " + minutes + " minutes et " + secondes + " secondes avant la fin du jeu.");
                 //On décide du joueur
                 if (jactuel == j2) jactuel = j1;
@@ -55,14 +53,20 @@ namespace MotsGlisses
                     {
                         //Si le mot est correct
                         p.Maj_Plateau(new Cases(cases));
-                        Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.Score(rep) + " points pour " + jactuel.Nom);
-                        jactuel.Add_Score(jactuel.Score(rep));
+                        Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.CalculScore(rep) + " points pour " + jactuel.Nom);
+                        jactuel.Add_Score(jactuel.CalculScore(rep));
                         jactuel.Add_Mot(rep);
 
                     }
                 }
+                //On actualise le temps
+                Thread.Sleep(50);
+                minutes = 4 - (DateTime.Now - debut).Minutes;
+                secondes = 60 - (DateTime.Now - debut).Seconds;
             }
             Console.WriteLine("Le jeu est terminé !");
+            Console.WriteLine(j1.Nom + " a obtenu " + j1.Score + " points." +
+                "\n" + j2.Nom + " a obtenu " + j2.Score + " points.");
 
         }
     }

@@ -23,6 +23,10 @@ namespace MotsGlisses
             get { return nom; }
             set { this.nom = value; }
         }
+		public int Score
+		{
+			get { return score; }
+		}
 		//Méthodes
 		public void Add_Mot (string mot)
 		{
@@ -44,7 +48,7 @@ namespace MotsGlisses
 		{
 			this.score += val;
 		}
-		public int Score(string mot, string chemin = "..\\..\\..\\Main\\Fichiers\\Lettre.txt")
+		public int CalculScore(string mot, string chemin = "..\\..\\..\\Main\\Fichiers\\Lettre.txt")
 		{
 			string[] lines = File.ReadAllLines(chemin);
 			int score = 0;
