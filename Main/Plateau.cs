@@ -178,21 +178,44 @@ namespace MotsGlisses
         }
         public void Maj_Plateau(Cases cases)
         {
-           Console.Clear();
-           for(int i = 0;i<plateau.GetLength(0);i++)
-           {
+            Console.Clear();
+            char[,] plateauTemp = new char[plateau.GetLength(0), plateau.GetLength(1)];
+            for(int i = 0;i<plateau.GetLength(0);i++)
+            {
                 for(int j = 0; j < plateau.GetLength(1);j++)
                 {
                     if (cases.Contient(new Case(i, j))) plateau[i, j] = '*';
+                    plateauTemp[i, j] = plateau[i, j];
                 }
-           }
-            Console.WriteLine(this.toString());
-            Thread.Sleep(1000);
-            Console.Clear();
-            for(int j = 0; j < plateau.GetLength(1);j++)
-            {
-
             }
+            Console.WriteLine(this.toString());
+            int plafond = 0;
+            int c = 0;
+            for (int j = 0; j < plateau.GetLength(1);j++)
+            {
+                plafond = 0;
+                c = 0;
+                //On détermine la hauteur maximale d'une colonne
+                for (int k = 0; k < plateauTemp.GetLength(0); k++)
+                {
+                    if (plateauTemp[k, j] == '*') plafond++;
+                    else k = plateau.GetLength(0);
+                }
+                //
+                for (int i = plateau.GetLength(0)-1; i >=-plateau.GetLength(0);i--)
+                {
+                    //On compte le nombre d'écart à faire selon le nombre de lettres disparues
+                    if (i >= plafond && plateau[i, j] == '*') c++;
+                    else
+                    {
+                        if (i >= plafond)
+                            plateau[i + c, j] = plateau[i, j];
+                        else if ((i + c) >= plafond)
+                            plateau[i + c, j] = '*';
+                    }
+                }
+            }
+            Console.WriteLine(this.toString());
         }
     }
 }
