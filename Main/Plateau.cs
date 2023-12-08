@@ -92,7 +92,10 @@ namespace MotsGlisses
             }
             return a;
         }
-        public void Afficher(bool color = false)
+        /// <summary>
+        /// Permet d'afficher en mettant les * en rouges
+        /// </summary>
+        public void Afficher()
         {
             for (int i = 0; i < plateau.GetLength(0); i++)
             {
@@ -104,14 +107,9 @@ namespace MotsGlisses
                 for (int j = 0; j < plateau.GetLength(1); j++)
                 {
                     Console.Write("| ");
-                    if (color && plateau[i, j] == '*') { Console.ForegroundColor = ConsoleColor.Red; Console.Write("* "); }
-                    else if (plateau[i, j] == '*')
-                    {
-                        Console.Write("  ");
-                    }
+                    if (plateau[i, j] == '*') { Console.ForegroundColor = ConsoleColor.Red; Console.Write("* "); }
                     else Console.Write(Convert.ToString(plateau[i, j]).ToUpper() + " ");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(" ");
                 }
                 Console.WriteLine("|");
             }
@@ -221,7 +219,7 @@ namespace MotsGlisses
                     plateauTemp[i, j] = plateau[i, j];
                 }
             }
-            this.Afficher(true);
+            this.Afficher();
             int plafond;
             int c;
             //Décaler les cases

@@ -6,6 +6,7 @@ namespace MotsGlisses
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Comment voulez-vous ouvrir le plateau ?");
             Plateau p = new Plateau();
             Console.WriteLine(p.toString());
             Plateau p1 = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
