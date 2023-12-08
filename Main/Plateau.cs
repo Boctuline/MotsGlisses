@@ -99,7 +99,7 @@ namespace MotsGlisses
         {
             for (int i = 0; i < plateau.GetLength(0); i++)
             {
-                Console.Write("_____");
+                Console.Write("____");
             }
             Console.WriteLine();
             for (int i = 0; i < plateau.GetLength(0); i++)

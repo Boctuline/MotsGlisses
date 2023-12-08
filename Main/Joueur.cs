@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MotsGlisses
 {
@@ -42,6 +43,18 @@ namespace MotsGlisses
 		public void Add_Score(int val)
 		{
 			this.score += val;
+		}
+		public int Score(string mot, string chemin = "..\\..\\..\\Main\\Fichiers\\Lettre.txt")
+		{
+			string[] lines = File.ReadAllLines(chemin);
+			int score = 0;
+			for(int i = 0; i < lines.Length; i++)
+			{
+				foreach(char letter in mot)
+				if (lines[i].Split(",")[0] == Convert.ToString(letter).ToUpper()) score+=Convert.ToInt32(lines[i].Split(",")[2]);
+			}
+			score *= mot.Length;
+			return score;
 		}
 		public bool Contient(string mot)
 		{
