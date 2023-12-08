@@ -42,7 +42,8 @@ namespace MotsGlisses
                     if (cases == null) Console.WriteLine("Le mot n'est pas dans le tableau");
                     else
                     {
-                        p.Maj_Plateau(new Cases(cases));
+                        foreach (Case case1 in cases) Console.WriteLine(case1.I + " + " + case1.J);
+                        //p.Maj_Plateau(new Cases(cases));
                         Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.Score(rep) + " points pour " + jactuel.Nom);
                         jactuel.Add_Score(jactuel.Score(rep));
                         jactuel.Add_Mot(rep);

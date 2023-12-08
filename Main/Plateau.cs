@@ -208,15 +208,15 @@ namespace MotsGlisses
             Case case1 = new Case(i,j, plateau.GetLength(0), plateau.GetLength(1));
             cases1.Add(case1);
             if (k == mot.Length) return cases1;
-            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
-            {
-                return null;
-            }
             Cases cases2 = new Cases(cases1);
             if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i,j-1,plateau.GetLength(0),plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j - 1, k + 1,cases1); if (adj != null) return adj; }
             if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i, j + 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j + 1, k + 1,cases1); if (adj != null) return adj; }
             if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i-1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i-1, j, k + 1,cases1); if (adj != null) return adj; }
-            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i+1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i+1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i+1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i+1, j, k + 1, cases1); if (adj != null) return adj; }
+            if (plateau[(i + 1) % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i + 1, j+1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i + 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
+            if (plateau[(i - 1) % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i - 1, j-1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if (plateau[(i + 1) % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i + 1, j-1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i + 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if (plateau[(i - 1) % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i - 1, j+1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
             return null;
         }
         /// <summary>
