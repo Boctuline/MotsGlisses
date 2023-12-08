@@ -137,17 +137,18 @@ namespace MotsGlisses
         /// </summary>
         /// <param name="mot">Mot à chercher</param>
         /// <returns></returns>
-        public bool Recherche_Mot(string mot)
+        public List<Case> Recherche_Mot(string mot)
         {
             for(int k = 0; k < plateau.GetLength(1); k++)
             {
 
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
-                    return Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
+                    List<Case> cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
+                    if (cases != null) return cases;
                 }
             }
-            return false;
+            return null;
         }
         /// <summary>
         /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
@@ -157,22 +158,41 @@ namespace MotsGlisses
         /// <param name="j">Position (colonne)</param>
         /// <param name="k">Position de la lettre dans le mot à chercher</param>
         /// <returns></returns>
-        public bool Recherche_Adj(string mot, int i, int j, int k = 1, int key = -1)
+        public List<Case> Recherche_Adj(string mot, int i, int j, int k = 1, List<Case> cases = null)
         {
-            if (k == mot.Length) return true;
+            if (cases == null) cases = new List<Case>(); 
+            List<Case> cases1 = new List<Case>(cases);
+            Case case1 = new Case(i,j, plateau.GetLength(0), plateau.GetLength(1));
+            cases1.Add(case1);
+            if (k == mot.Length) return cases1;
             if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] != mot[k] && plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] != mot[k] && plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k] && plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] != mot[k])
             {
-                return false;
+                return null;
             }
-            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && key != 1) if (Recherche_Adj(mot, i, j - 1, k + 1, 0)) return true;
-            if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && key != 0) if (Recherche_Adj(mot, i, j + 1, k + 1, 1)) return true;
-            if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && key != 3) if (Recherche_Adj(mot, i - 1, j, k + 1, 2)) return true;
-            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && key != 2) if (Recherche_Adj(mot, i + 1, j, k + 1, 3)) return true;
-            return false;
+            Cases cases2 = new Cases(cases1);
+            if (plateau[i % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i,j-1,plateau.GetLength(0),plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j - 1, k + 1,cases1); if (adj != null) return adj; }
+            if (plateau[i % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i, j + 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i, j + 1, k + 1,cases1); if (adj != null) return adj; }
+            if (plateau[(i - 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i-1, j, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i-1, j, k + 1,cases1); if (adj != null) return adj; }
+            if (plateau[(i + 1) % plateau.GetLength(0), j % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i+1, j - 1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i+1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            return null;
         }
-        public void Maj_Plateau(string mot)
+        public void Maj_Plateau(Cases cases)
         {
-            
+           Console.Clear();
+           for(int i = 0;i<plateau.GetLength(0);i++)
+           {
+                for(int j = 0; j < plateau.GetLength(1);j++)
+                {
+                    if (cases.Contient(new Case(i, j))) plateau[i, j] = '*';
+                }
+           }
+            Console.WriteLine(this.toString());
+            Thread.Sleep(1000);
+            Console.Clear();
+            for(int j = 0; j < plateau.GetLength(1);j++)
+            {
+
+            }
         }
     }
 }

@@ -20,9 +20,9 @@ namespace MotsGlisses
             get { return j; }
             set { j = value; }
         }
-        public Case(int i, int j, int l,int c) {
-            this.i = i%c;
-            this.j = j%c;
+        public Case(int i, int j, int l=-1,int c=-1) {
+            this.i = l==-1?i:i%l;
+            this.j = c==-1?j:j%c;
         }
         public string toString()
         {
