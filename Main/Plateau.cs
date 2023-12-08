@@ -165,7 +165,6 @@ namespace MotsGlisses
         /// <returns></returns>
         public List<Case> Recherche_Mot(string mot)
         {
-            List<Case> cases = null;
             mot = mot.ToLower();
             if (mot == "giles nocturne")
             {
@@ -188,10 +187,11 @@ namespace MotsGlisses
 
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
-                    cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
+                    List<Case> cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
+                    if (cases != null) return cases;
                 }
             }
-            return cases;
+            return null;
         }
         /// <summary>
         /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
