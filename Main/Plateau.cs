@@ -204,6 +204,7 @@ namespace MotsGlisses
         public List<Case> Recherche_Adj(string mot, int i, int j, int k = 1, List<Case> cases = null)
         {
             if (cases == null) cases = new List<Case>(); 
+            //On duplique la liste à chaque fois
             List<Case> cases1 = new List<Case>(cases);
             Case case1 = new Case(i,j, plateau.GetLength(0), plateau.GetLength(1));
             cases1.Add(case1);
