@@ -167,7 +167,7 @@ namespace MotsGlisses
         {
             mot = mot.ToLower();
             List<Case> cases = null;
-            if (mot == "giles nocturne")
+            if (mot == "gilles nocturne")
             {
                 List<Case> list = new List<Case>();
                 for(int i = 0;i < mot.Length;i++)
@@ -195,7 +195,7 @@ namespace MotsGlisses
             return null;
         }
         /// <summary>
-        /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
+        /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j) de manière à considérer les bords comme des portails
         /// </summary>
         /// <param name="mot">Mot à utiliser</param>
         /// <param name="i">Position (ligne)</param>
@@ -222,6 +222,14 @@ namespace MotsGlisses
             if (plateau[(i - 1) % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i - 1, j+1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
             return null;
         }
+        /// <summary>
+        /// Permet de trouver si le kème charactère d'une entrée string se trouve autour de la position (i,j)
+        /// </summary>
+        /// <param name="mot">Mot à utiliser</param>
+        /// <param name="i">Position (ligne)</param>
+        /// <param name="j">Position (colonne)</param>
+        /// <param name="k">Position de la lettre dans le mot à chercher</param>
+        /// <returns>null ou liste de cases</returns>
         public List<Case> Recherche_Adj2(string mot, int i, int j, int k = 1, List<Case> cases = null)
         {
             if (cases == null) cases = new List<Case>();
@@ -287,6 +295,7 @@ namespace MotsGlisses
                     }
                 }
             }
+            //On remplace les astérisques par des espaces
             for (int i = 0; i < plateau.GetLength(0); i++)
             {
                 for (int j = 0; j < plateau.GetLength(1); j++)
