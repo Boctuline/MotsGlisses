@@ -46,6 +46,7 @@ namespace MotsGlisses
             minutesTour = DemandeTimer(0);
             Console.Write("Et en secondes ? : ");
             secondesTour = DemandeTimer(30);
+            Console.Clear();
             Console.WriteLine(minutes > 0 ? "Chaque tour durera donc " + minutesTour + " minutes et " + secondesTour + " secondes !" : "Chaque tour durera donc " + secondesTour + " secondes !");
             p.Afficher();
             DateTime debut = DateTime.Now;
@@ -58,27 +59,31 @@ namespace MotsGlisses
                 if (jactuel == j2) jactuel = j1;
                 else jactuel = j2;
                 Console.WriteLine("Tour de " + jactuel.Nom + ".");
-
-                //Réponse du joueur
                 DateTime debutTour = DateTime.Now;
-                rep = Console.ReadLine();
-                TimeSpan restantTour = new TimeSpan(0,minutesTour,secondesTour) - (DateTime.Now - debutTour);
-                if (restantTour < new TimeSpan(0,0,0) ) Console.WriteLine(minutesTour>0?"Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!": "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!");
-                else if (rep.ToLower() == "skip") Console.WriteLine("Vous avez décider de passer ce tour.");
-                else
+                bool repeat;
+                do
                 {
-                    List<Case> cases = p.Recherche_Mot(rep, modePortail);
-                    if (cases == null) Console.WriteLine("Le mot n'est pas dans le tableau ou ne commence pas à partir du bas !");
+                    repeat = false;
+                    //Réponse du joueur
+                    rep = Console.ReadLine();
+                    TimeSpan restantTour = new TimeSpan(0, minutesTour, secondesTour) - (DateTime.Now - debutTour);
+                    if (restantTour < new TimeSpan(0, 0, 0)) { Console.Clear(); p.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
+                    else if (rep.ToLower() == "skip") { Console.Clear(); p.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
                     else
                     {
-                        //Si le mot est correct
-                        p.Maj_Plateau(new Cases(cases));
-                        Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.CalculScore(rep) + " points pour " + jactuel.Nom);
-                        jactuel.Add_Score(jactuel.CalculScore(rep));
-                        jactuel.Add_Mot(rep);
+                        List<Case> cases = p.Recherche_Mot(rep, modePortail);
+                        if (cases == null) { Console.Clear();p.Afficher(); Console.WriteLine("Le mot n'est pas dans le tableau ou ne commence pas à partir du bas !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
+                        else
+                        {
+                            //Si le mot est correct
+                            p.Maj_Plateau(new Cases(cases));
+                            Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.CalculScore(rep) + " points pour " + jactuel.Nom);
+                            jactuel.Add_Score(jactuel.CalculScore(rep));
+                            jactuel.Add_Mot(rep);
 
+                        }
                     }
-                }
+                }while(repeat);
                 //On actualise le temps
                 Thread.Sleep(50);
                 restant = new TimeSpan(0, minutes, secondes) - (DateTime.Now - debut);
