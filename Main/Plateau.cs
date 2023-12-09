@@ -163,9 +163,10 @@ namespace MotsGlisses
         /// </summary>
         /// <param name="mot">Mot à chercher</param>
         /// <returns>null ou liste de cases</returns>
-        public List<Case> Recherche_Mot(string mot)
+        public List<Case> Recherche_Mot(string mot, bool modePortail = true)
         {
             mot = mot.ToLower();
+            List<Case> cases = null;
             if (mot == "giles nocturne")
             {
                 List<Case> list = new List<Case>();
@@ -187,7 +188,7 @@ namespace MotsGlisses
 
                 if (plateau[plateau.GetLength(0) - 1, k] == mot[0])
                 {
-                    List<Case> cases = Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k);
+                    cases = modePortail?Recherche_Adj(mot, 2 * plateau.GetLength(0) - 1, plateau.GetLength(1) + k) : Recherche_Adj2(mot, plateau.GetLength(0) - 1, k);
                     if (cases != null) return cases;
                 }
             }
@@ -219,6 +220,26 @@ namespace MotsGlisses
             if (plateau[(i - 1) % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i - 1, j-1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
             if (plateau[(i + 1) % plateau.GetLength(0), (j - 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i + 1, j-1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i + 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
             if (plateau[(i - 1) % plateau.GetLength(0), (j + 1) % plateau.GetLength(1)] == mot[k] && !cases2.Contient(new Case(i - 1, j+1, plateau.GetLength(0), plateau.GetLength(1)))) { List<Case> adj = Recherche_Adj(mot, i - 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
+            return null;
+        }
+        public List<Case> Recherche_Adj2(string mot, int i, int j, int k = 1, List<Case> cases = null)
+        {
+            if (cases == null) cases = new List<Case>();
+            //On duplique la liste à chaque fois
+            List<Case> cases1 = new List<Case>(cases);
+            Case case1 = new Case(i, j);
+            cases1.Add(case1);
+            if (k == mot.Length) return cases1;
+            //Objet liste de case permettant de vérifier le contenu
+            Cases cases2 = new Cases(cases1);
+            if ((j-1) >= 0 && plateau[i, j - 1] == mot[k] && !cases2.Contient(new Case(i, j - 1))) { List<Case> adj = Recherche_Adj(mot, i, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if ((j+1) < plateau.GetLength(1) && plateau[i, j + 1] == mot[k] && !cases2.Contient(new Case(i, j + 1))) { List<Case> adj = Recherche_Adj(mot, i, j + 1, k + 1, cases1); if (adj != null) return adj; }
+            if ((i-1) >= 0 && plateau[i - 1, j] == mot[k] && !cases2.Contient(new Case(i - 1, j))) { List<Case> adj = Recherche_Adj(mot, i - 1, j, k + 1, cases1); if (adj != null) return adj; }
+            if ((i+1) < plateau.GetLength(0) && plateau[i + 1, j] == mot[k] && !cases2.Contient(new Case(i + 1, j))) { List<Case> adj = Recherche_Adj(mot, i + 1, j, k + 1, cases1); if (adj != null) return adj; }
+            if (i+1 < plateau.GetLength(0) && j+1 < plateau.GetLength(1) && plateau[i + 1, j + 1] == mot[k] && !cases2.Contient(new Case(i + 1, j + 1))) { List<Case> adj = Recherche_Adj(mot, i + 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
+            if ((i-1) >= 0 && (j-1) >= 0 && plateau[i - 1,j - 1] == mot[k] && !cases2.Contient(new Case(i - 1, j - 1))) { List<Case> adj = Recherche_Adj(mot, i - 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if ((i+1) < plateau.GetLength(0) && j-1 >= 0 && plateau[i + 1,j - 1] == mot[k] && !cases2.Contient(new Case(i + 1, j - 1))) { List<Case> adj = Recherche_Adj(mot, i + 1, j - 1, k + 1, cases1); if (adj != null) return adj; }
+            if ((i-1) >= 0 && j+1 < plateau.GetLength(1) && plateau[i - 1, j + 1] == mot[k] && !cases2.Contient(new Case(i - 1, j + 1))) { List<Case> adj = Recherche_Adj(mot, i - 1, j + 1, k + 1, cases1); if (adj != null) return adj; }
             return null;
         }
         /// <summary>
