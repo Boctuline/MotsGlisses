@@ -34,14 +34,16 @@ namespace MotsGlisses
 		}
 		public string toString()
 		{
-			string a = "Le joueur " + nom + " a " + score + "pts et a trouvé les mots : ";
+			if (score == 0) return "Le joueur " + nom + " n'a trouvé aucun mot...";
+			string a = "Le joueur " + nom + " a " + score + " pts et a trouvé les mots : ";
 			a += motsTrouves[0];
+			if (motsTrouves.Count == 2) a += " - ";
 			for(int i = 1; i < motsTrouves.Count-1; i++)
 			{
 				if (i == 1) a += " - ";
 				a += motsTrouves[i] + " - ";
 			}
-			a += motsTrouves[motsTrouves.Count - 1];
+			a += motsTrouves[motsTrouves.Count - 1] + "\n";
 			return a;
 		}
 		public void Add_Score(int val)

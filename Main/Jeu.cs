@@ -8,11 +8,11 @@ namespace MotsGlisses
 {
     public class Jeu
     {
-        Dictionnaire dico;
+        Dictionnaire dictionnaire;
         Plateau p;
         Joueur j1;
         Joueur j2;
-        public Jeu(Plateau p, Joueur j1, Joueur j2, bool modePortail) {
+        public Jeu(Plateau p, Joueur j1, Joueur j2, Dictionnaire dictionnaire, bool modePortail) {
             int minutes, minutesTour, secondesTour;
             int secondes = 0;
             string rep;
@@ -46,6 +46,7 @@ namespace MotsGlisses
                     TimeSpan restantTour = new TimeSpan(0, minutesTour, secondesTour) - (DateTime.Now - debutTour);
                     if (restantTour < new TimeSpan(0, 0, 0)) { Console.Clear(); p.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
                     else if (rep.ToLower() == "skip") { Console.Clear(); p.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
+                    else if(!dictionnaire.RechDichoRecursif(rep)) { Console.Clear(); p.Afficher(); Console.WriteLine("Vous devez proposer un mot " + dictionnaire.Langue + " !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (rep.Length < 2) { Console.Clear(); p.Afficher(); Console.WriteLine("Vous devez proposer un mot d'au moins 2 lettre !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (jactuel.Contient(rep.ToLower())) { Console.Clear(); p.Afficher(); Console.WriteLine("Vous avez déjà trouvé ce mot !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else
@@ -62,14 +63,13 @@ namespace MotsGlisses
 
                         }
                     }
-                } while (repeat);
+                } while (repeat && new TimeSpan(0, minutes, secondes) - (DateTime.Now - debut) > new TimeSpan(0,0,0));
                 //On actualise le temps
                 Thread.Sleep(50);
                 restant = new TimeSpan(0, minutes, secondes) - (DateTime.Now - debut);
             }
             Console.WriteLine("Le jeu est terminé !");
-            Console.WriteLine(j1.Nom + " a obtenu " + j1.Score + " points." +
-                "\n" + j2.Nom + " a obtenu " + j2.Score + " points.");
+            Console.WriteLine(j1.toString() + "\n" +j2.toString());
         }
         public static int DemandeTimer(int temps)
         {

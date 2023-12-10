@@ -124,6 +124,7 @@ namespace MotsGlisses
 
         public bool RechDichoRecursif(string word)
         {
+            word = word.ToUpper();
             foreach (List<string> sousListe in this.dico)
             {
                 if (Dichotomie(sousListe, word, 0, sousListe.Count - 1))

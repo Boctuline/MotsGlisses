@@ -35,6 +35,10 @@ namespace MotsGlisses
                     if (i != 0) Console.Clear();
                 }
 
+                //Création et tri du dictionnaire
+                Dictionnaire dictionnaire = new Dictionnaire("..\\..\\..\\Main\\Fichiers\\Mots_Français.txt", "Français");
+                foreach(List<string> liste in dictionnaire.Dico)
+                dictionnaire.Tri_Fusion_Reccursif(liste);
 
                 //Sélection du plateau
                 Console.WriteLine("Comment voulez-vous ouvrir le plateau ?" +
@@ -74,7 +78,7 @@ namespace MotsGlisses
                     Joueur j2 = new Joueur(rep);
 
                     //Lancement du jeu
-                    Jeu jeu = new Jeu(p, j1, j2, modePortail);
+                    Jeu jeu = new Jeu(p, j1, j2, dictionnaire, modePortail);
                     Console.WriteLine("Voulez vous lancer une nouvelle partie ? y/n");
                     do
                     {
