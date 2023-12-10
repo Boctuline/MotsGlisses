@@ -43,7 +43,7 @@ namespace MotsGlisses
 				if (i == 1) a += " - ";
 				a += motsTrouves[i] + " - ";
 			}
-			a += motsTrouves[motsTrouves.Count - 1] + "\n";
+			if (motsTrouves.Count > 1) a += motsTrouves[motsTrouves.Count - 1];
 			return a;
 		}
 		public void Add_Score(int val)
@@ -64,7 +64,7 @@ namespace MotsGlisses
 		}
 		public bool Contient(string mot)
 		{
-			return motsTrouves.Contains(mot);
+			return motsTrouves.Contains(mot.ToLower());
 		}
 	}
 }
