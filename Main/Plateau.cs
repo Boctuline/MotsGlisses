@@ -107,7 +107,7 @@ namespace MotsGlisses
                 for (int j = 0; j < plateau.GetLength(1); j++)
                 {
                     Console.Write("| ");
-                    if (plateau[i, j] == '*') { Console.ForegroundColor = ConsoleColor.Red; Console.Write("* "); }
+                    if (plateau[i, j] == '*') { Console.ForegroundColor = ConsoleColor.DarkRed; Console.Write("* "); }
                     else Console.Write(Convert.ToString(plateau[i, j]).ToUpper() + " ");
                     Console.ForegroundColor = ConsoleColor.White;
                 }

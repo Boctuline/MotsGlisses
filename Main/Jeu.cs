@@ -18,14 +18,16 @@ namespace MotsGlisses
             int secondes = 0;
             string rep;
             Joueur jactuel = j2;
-            Console.Write("Combien de temps avant la fin du jeu ? 59min maximum. (Tapez \"d\" pour le temps par défaut.)\nEn minutes : ");
+            Console.Write("Combien de temps avant la fin du jeu ? 59mn maximum. (Tapez \"d\" pour le temps par défaut de 5mn.)\nEn minutes : ");
             minutes = DemandeTimer(5);
-            Console.Write("La partie durera donc " + minutes + " minutes !\nCombien de temps par tour ? 59min maximum. (Tapez \"d\" pour le temps par défaut.)\nEn minutes : ");
+            Console.Write("La partie durera donc " + minutes + " minutes !\nCombien de temps par tour ? 59mn et 59s maximum. (Tapez \"d\" pour le temps par défaut de 0mn30s.)\nEn minutes : ");
             minutesTour = DemandeTimer(0);
             Console.Write("Et en secondes ? : ");
-            secondesTour = DemandeTimer(30);
+            secondesTour = DemandeTimer(30, true);
             Console.Clear();
-            Console.WriteLine(minutes > 0 ? "Chaque tour durera donc " + minutesTour + " minutes et " + secondesTour + " secondes !\nVous pouvez entrer \"Skip\" pour passer votre tour." : "Chaque tour durera donc " + secondesTour + " secondes !\nVous pouvez entrer \"Skip\" pour passer votre tour.");
+            Console.WriteLine(minutes > 0 ? "Chaque tour durera donc " + minutesTour + " minutes et " + secondesTour + " secondes !" : "Chaque tour durera donc " + secondesTour + " secondes !");
+            Console.Write("Vous pouvez entrer "); Console.ForegroundColor = ConsoleColor.Red; Console.Write("\"Skip\""); Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" pour passer votre tour, ou "); Console.ForegroundColor = ConsoleColor.Red; Console.Write("\"Exit\""); Console.ForegroundColor = ConsoleColor.White; Console.WriteLine(" pour terminer le jeu plus vite.");
             plateau.Afficher();
             DateTime debut = DateTime.Now;
             TimeSpan restant = new TimeSpan(0, minutes, secondes) - (DateTime.Now - debut);
@@ -47,6 +49,7 @@ namespace MotsGlisses
                     TimeSpan restantTour = new TimeSpan(0, minutesTour, secondesTour) - (DateTime.Now - debutTour);
                     if (restantTour < new TimeSpan(0, 0, 0)) { Console.Clear(); plateau.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
                     else if (rep.ToLower() == "skip") { Console.Clear(); plateau.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
+                    else if (rep.ToLower() == "exit") { debut = DateTime.Now  - new TimeSpan(2,0,0); }
                     else if(!dictionnaire.RechDichoRecursif(rep) && rep.ToLower() != "gilles nocturne") { Console.Clear(); plateau.Afficher(); Console.WriteLine(rep + " n'est pas un mot " + dictionnaire.Langue + " !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (rep.Length < 2) { Console.Clear(); plateau.Afficher(); Console.WriteLine("Vous devez proposer un mot d'au moins 2 lettre !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (jactuel.Contient(rep.ToLower())) { Console.Clear(); plateau.Afficher(); Console.WriteLine("Vous avez déjà trouvé ce mot !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
@@ -72,7 +75,7 @@ namespace MotsGlisses
             Console.WriteLine("Le jeu est terminé !");
             Console.WriteLine(j1.toString() + "\n" +j2.toString());
         }
-        public static int DemandeTimer(int temps)
+        public static int DemandeTimer(int temps, bool type = false)
         {
             bool repeat;
             do
@@ -82,7 +85,7 @@ namespace MotsGlisses
                 try
                 {
                     if (rep.ToLower() != "d") temps = int.Parse(rep);
-                    if (temps > 59) { Console.WriteLine("59 minutes maximum !"); repeat = true; }
+                    if (temps > 59 ) { Console.WriteLine(type?"59 secondes maximum !":"59 minutes maximum !"); repeat = true; }
                 }
                 catch (FormatException) { Console.WriteLine("Veuillez taper un nombre"); repeat = true; }
                 catch (OverflowException) { Console.WriteLine("Veuillez taper un temps plus petit"); repeat = true; }
