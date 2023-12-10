@@ -305,5 +305,13 @@ namespace MotsGlisses
             }
             this.Afficher();
         }
+        public bool Plateau_Vide()
+        {
+            foreach(char a in plateau)
+            {
+                if (a != ' ') return false;
+            }
+            return true;
+        }
     }
 }
