@@ -124,7 +124,7 @@ namespace MotsGlisses
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine(intro);
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Parlons timer maintenant !");
+                    Console.WriteLine("Parlons timer maintenant !\n");
                     Jeu jeu = new Jeu(p, j1, j2, dictionnaire, modePortail);
                     Console.WriteLine("Voulez vous relancer une nouvelle partie ? y/n");
                     do

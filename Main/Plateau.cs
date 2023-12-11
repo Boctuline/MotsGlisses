@@ -267,6 +267,7 @@ namespace MotsGlisses
                     plateauTemp[i, j] = plateau[i, j];
                 }
             }
+            Jeu.Titre();
             this.Afficher();
             int plafond;
             int c;
