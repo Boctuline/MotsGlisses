@@ -17,7 +17,7 @@ namespace MotsGlisses
         public Jeu(Plateau plateau, Joueur j1, Joueur j2, Dictionnaire dictionnaire, bool modePortail, int animation) {
             int minutes, minutesTour, secondesTour;
             int secondes = 0;
-            string rep;
+            string rep = "";
             Joueur jactuel = j2;
             Console.Write("Combien de temps avant la fin du jeu ? 59mn maximum. (Tapez \"d\" pour le temps par défaut de 5mn.)\nEn minutes : ");
             minutes = DemandeTimer(5);
@@ -73,6 +73,8 @@ namespace MotsGlisses
                 Thread.Sleep(50);
                 restant = new TimeSpan(0, minutes, secondes) - (DateTime.Now - debut);
             }
+            if (rep.ToLower() != "exit") Thread.Sleep(1500);
+            Jeu.Titre();
             Console.WriteLine("Le jeu est terminé !");
             Console.WriteLine(j1.toString() + "\n" +j2.toString());
             Console.Write("C'est donc "); Console.WriteLine(j1.Score>j2.Score?j1.Nom + " qui gagne !" : j2.Nom + " qui gagne !");
