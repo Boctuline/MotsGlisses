@@ -75,6 +75,7 @@ namespace MotsGlisses
             }
             Console.WriteLine("Le jeu est terminé !");
             Console.WriteLine(j1.toString() + "\n" +j2.toString());
+            Console.Write("C'est donc "); Console.WriteLine(j1.Score>j2.Score?j1.Nom + " qui gagne !" : j2.Nom + " qui gagne !");
         }
         public static int DemandeTimer(int temps, bool type = false)
         {

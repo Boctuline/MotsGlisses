@@ -97,7 +97,7 @@ namespace MotsGlisses
                 if (!sortir)
                 {
                     //Choix du mode de jeu
-                    Console.WriteLine("\nNotre jeu propose un mode de jeu alternatif appelé \"Mode portail\".\nC'est un mode de jeu permettant de considérer les bords du plateau comme des portails vers les bords opposés." +
+                    Console.WriteLine("Notre jeu propose un mode de jeu alternatif appelé \"Mode portail\".\nC'est un mode de jeu permettant de considérer les bords du plateau comme des portails vers les bords opposés." +
                         "\nSouhaite-vous l'activer ? y/n");
                     bool modePortail = false;
                     do
@@ -108,6 +108,7 @@ namespace MotsGlisses
                         else Console.WriteLine("Réponse incorrecte");
                     } while (rep != "y" && rep != "n");
 
+                    Thread.Sleep(1500);
                     Jeu.Titre();
 
                     //Choix de l'animation
