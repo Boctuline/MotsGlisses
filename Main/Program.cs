@@ -72,7 +72,7 @@ namespace MotsGlisses
                                 if (fichier < 1) { Console.WriteLine("Veuillez entrez un nombre supérieur ou égal à " + 1); number = false; }
                             }
                             catch (FormatException) { number = false; Console.WriteLine("Veuillez entrer un nombre ! "); }
-                            catch (OverflowException) { number = false; Console.WriteLine("Veuillez entrer un nombre inférieur au nombre de fichier ! "); }
+                            catch (OverflowException) { number = false; Console.WriteLine("Veuillez entrez un nombre inférieur ou égal à " + files.Length); }
                             catch (ArgumentNullException ex) { number = false; Console.Write(ex); }
                         } while (!number);
                         p = new Plateau(files[fichier - 1]);
