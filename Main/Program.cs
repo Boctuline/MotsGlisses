@@ -58,12 +58,11 @@ namespace MotsGlisses
 
                     //Plateau généré aléatoirement
                     else if (rep == "1") { 
-                        p = new Plateau(); 
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine(intro);
-                        Console.ForegroundColor = ConsoleColor.White; 
-                        Console.WriteLine("Le plateau a été généré aléatoirement !"); }
+                        p = new Plateau();
+                        Console.WriteLine("Le plateau a été généré aléatoirement !");
+                        Thread.Sleep(1500);
+                        Jeu.Titre();
+                    }
                     
                     //Plateau à partir de fichier
                     else if (rep == "2")
@@ -88,11 +87,9 @@ namespace MotsGlisses
                             catch (ArgumentNullException ex) { number = false; Console.Write(ex); }
                         } while (!number);
                         p = new Plateau(files[fichier - 1]);
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine(intro);
-                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Le plateau sera donc ouvert à partir du fichier " + files[fichier - 1].Split("\\")[6] + " !");
+                        Thread.Sleep(1500);
+                        Jeu.Titre();
                     }
                     else Console.WriteLine("Réponse incorrecte");
                 } while (rep != "1" && rep != "2" && !sortir);
@@ -111,7 +108,31 @@ namespace MotsGlisses
                         else Console.WriteLine("Réponse incorrecte");
                     } while (rep != "y" && rep != "n");
 
+                    Jeu.Titre();
+
+                    //Choix de l'animation
+                    Console.WriteLine("Notre jeu propose aussi 3 animations différentes. Veuillez en choisir une :\n1. Affichage du plateau avant et après en même temps\n2. Affichage du plateau avant puis après\n3. Animation de chute des lettres");
+                    int animation = 0;
+                    bool number = true;
+                    do
+                    {
+                        number = true;
+                        try
+                        {
+                            animation = int.Parse(Console.ReadLine());
+                            if (animation > 3) { Console.WriteLine("Veuillez entrez un nombre inférieur ou égal à 3"); number = false; }
+                            if (animation < 1) { Console.WriteLine("Veuillez entrez un nombre supérieur ou égal à 1"); number = false; }
+                        }
+                        catch (FormatException) { number = false; Console.WriteLine("Veuillez entrer un nombre ! "); }
+                        catch (OverflowException) { number = false; Console.WriteLine("Veuillez entrez un nombre inférieur ou égal à 3"); }
+                        catch (ArgumentNullException ex) { number = false; Console.Write(ex); }
+                    } while (!number);
+                    Console.WriteLine("Vous avez choisi l'animation " + animation + " !");
+                    Thread.Sleep(1500);
+                    Jeu.Titre();
+
                     //Création des joueurs
+                    Console.WriteLine("Présentez-vous !\n");
                     Console.WriteLine("Quel est votre nom Joueur 1 ?");
                     rep = Console.ReadLine();
                     Joueur j1 = new Joueur(rep);
@@ -120,12 +141,9 @@ namespace MotsGlisses
                     Joueur j2 = new Joueur(rep);
 
                     //Lancement du jeu
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(intro);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Jeu.Titre();
                     Console.WriteLine("Parlons timer maintenant !\n");
-                    Jeu jeu = new Jeu(p, j1, j2, dictionnaire, modePortail);
+                    Jeu jeu = new Jeu(p, j1, j2, dictionnaire, modePortail, animation-1);
                     Console.WriteLine("Voulez vous relancer une nouvelle partie ? y/n");
                     do
                     {

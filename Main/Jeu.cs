@@ -14,7 +14,7 @@ namespace MotsGlisses
         Joueur j1;
         Joueur j2;
 
-        public Jeu(Plateau plateau, Joueur j1, Joueur j2, Dictionnaire dictionnaire, bool modePortail) {
+        public Jeu(Plateau plateau, Joueur j1, Joueur j2, Dictionnaire dictionnaire, bool modePortail, int animation) {
             int minutes, minutesTour, secondesTour;
             int secondes = 0;
             string rep;
@@ -25,7 +25,6 @@ namespace MotsGlisses
             minutesTour = DemandeTimer(0);
             Console.Write("Et en secondes ? : ");
             secondesTour = DemandeTimer(30, true);
-            Console.Clear();
             Titre();
             Console.WriteLine(minutes > 0 ? "Chaque tour durera donc " + minutesTour + " minutes et " + secondesTour + " secondes !" : "Chaque tour durera donc " + secondesTour + " secondes !");
             Console.Write("Vous pouvez entrer "); Console.ForegroundColor = ConsoleColor.Red; Console.Write("\"Skip\""); Console.ForegroundColor = ConsoleColor.White;
@@ -49,20 +48,20 @@ namespace MotsGlisses
                     //Réponse du joueur
                     rep = Console.ReadLine();
                     TimeSpan restantTour = new TimeSpan(0, minutesTour, secondesTour) - (DateTime.Now - debutTour);
-                    if (restantTour < new TimeSpan(0, 0, 0)) { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
-                    else if (rep.ToLower() == "skip") { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
+                    if (restantTour < new TimeSpan(0, 0, 0)) { Titre(); plateau.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
+                    else if (rep.ToLower() == "skip") { Titre(); plateau.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
                     else if (rep.ToLower() == "exit") { debut = DateTime.Now  - new TimeSpan(2,0,0); }
-                    else if(!dictionnaire.RechDichoRecursif(rep) && rep.ToLower() != "gilles nocturne") { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine(rep + " n'est pas un mot " + dictionnaire.Langue + " !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
-                    else if (rep.Length < 2) { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine("Vous devez proposer un mot d'au moins 2 lettre !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
-                    else if (jactuel.Contient(rep.ToLower())) { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine("Vous avez déjà trouvé ce mot !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
+                    else if(!dictionnaire.RechDichoRecursif(rep) && rep.ToLower() != "gilles nocturne") { Titre(); plateau.Afficher(); Console.WriteLine(rep + " n'est pas un mot " + dictionnaire.Langue + " !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
+                    else if (rep.Length < 2) { Titre(); plateau.Afficher(); Console.WriteLine("Vous devez proposer un mot d'au moins 2 lettre !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
+                    else if (jactuel.Contient(rep.ToLower())) { Titre(); plateau.Afficher(); Console.WriteLine("Vous avez déjà trouvé ce mot !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else
                     {
                         List<Case> cases = plateau.Recherche_Mot(rep, modePortail);
-                        if (cases == null) { Console.Clear(); Titre(); plateau.Afficher(); Console.WriteLine( rep +" n'est pas dans le tableau ou ne commence pas à partir du bas !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
+                        if (cases == null) { Titre(); plateau.Afficher(); Console.WriteLine( rep +" n'est pas dans le tableau ou ne commence pas à partir du bas !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                         else
                         {
                             //Si le mot est correct
-                            plateau.Maj_Plateau(new Cases(cases));
+                            plateau.Maj_Plateau(new Cases(cases), animation);
                             Console.WriteLine(Convert.ToString(rep[0]).ToUpper() + rep.Substring(1, rep.Length - 1) + " est dans la liste !\n" + "+" + jactuel.CalculScore(rep) + " points pour " + jactuel.Nom);
                             jactuel.Add_Score(jactuel.CalculScore(rep));
                             jactuel.Add_Mot(rep);

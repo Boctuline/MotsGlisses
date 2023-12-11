@@ -254,7 +254,7 @@ namespace MotsGlisses
         /// Permet d'éliminer les cases sélectionnés dans un premier temps, puis décale les lettres vers le bas
         /// </summary>
         /// <param name="cases">La listes des cases à faire disparaître</param>
-        public void Maj_Plateau(Cases cases)
+        public void Maj_Plateau(Cases cases, int animation = 0)
         {
             Console.Clear();
             char[,] plateauTemp = new char[plateau.GetLength(0), plateau.GetLength(1)];
@@ -269,31 +269,38 @@ namespace MotsGlisses
             }
             Jeu.Titre();
             this.Afficher();
-            int plafond;
-            int c;
+            int decalage;
             //Décaler les cases
             for (int j = 0; j < plateau.GetLength(1);j++)
             {
-                plafond = 0;
-                c = 0;
-                //On détermine la hauteur maximale d'une colonne
-                for (int k = 0; k < plateauTemp.GetLength(0); k++)
+                decalage = 0;
+                //On réalise le décalage pour la colonne j
+                int p = plateau.GetLength(0)-1;
+                while (p >= 0)
                 {
-                    if (plateauTemp[k, j] == ' ') plafond++;
-                    else k = plateau.GetLength(0);
-                }
-                //On réalise l'écart pour la colonne j
-                for (int i = plateau.GetLength(0)-1; i >=-plateau.GetLength(0);i--)
-                {
-                    //On compte le nombre d'écart à faire selon le nombre de lettres disparues
-                    if (i >= plafond && plateau[i, j] == '*') c++;
-                    else
+                    if (plateau[p, j] == '*') decalage++;
+                    else plateau[p + decalage, j] = plateau[p, j];
+                    if (decalage > 0 && animation == 2)
                     {
-                        if (i >= plafond)
-                            plateau[i + c, j] = plateau[i, j];
-                        else if ((i + c) >= plafond)
-                            plateau[i + c, j] = '*';
+                        Thread.Sleep(10);
+                        Console.Clear();
+                        Jeu.Titre();
+                        this.Afficher();
                     }
+                    p--;
+                }
+
+                while ((p + decalage) >= 0)
+                {
+                    plateau[p + decalage, j] = '*';
+                    if(decalage > 0 && animation == 2)
+                    {
+                        Thread.Sleep(10);
+                        Console.Clear();
+                        Jeu.Titre();
+                        this.Afficher();
+                    }
+                    p--;
                 }
             }
             //On remplace les astérisques par des espaces
@@ -303,6 +310,12 @@ namespace MotsGlisses
                 {
                     if (plateau[i,j] == '*') plateau[i, j] = ' ';
                 }
+            }
+            if (animation != 0)
+            {
+                Thread.Sleep(500);
+                Console.Clear();
+                Jeu.Titre();
             }
             this.Afficher();
         }
