@@ -23,6 +23,7 @@ namespace MotsGlisses
             while (!sortir)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 for (int i = line.Length; i >= 0; i--)
                 {
                     intro = "";
@@ -34,6 +35,7 @@ namespace MotsGlisses
                     Thread.Sleep(40);
                     if (i != 0) Console.Clear();
                 }
+                Console.ForegroundColor = ConsoleColor.White;
 
                 //Création et tri du dictionnaire
                 Dictionnaire dictionnaire = new Dictionnaire("..\\..\\..\\Main\\Fichiers\\Mots_Français.txt", "Français");
@@ -51,14 +53,39 @@ namespace MotsGlisses
                 {
                     rep = Console.ReadLine();
                     if (rep == "3") { Console.WriteLine("Au revoir !"); sortir = true; }
-                    else if (rep == "1") p = new Plateau();
-                    else if (rep == "2") p = new Plateau("..\\..\\..\\Main\\Fichiers\\Test1.csv");
+                    else if (rep == "1") { p = new Plateau(); Console.Clear(); Console.WriteLine("Le plateau a été généré aléatoirement !"); }
+                    else if (rep == "2")
+                    {
+                        int fichier = 0;
+                        bool number = true;
+                        string[] files = Directory.GetFiles("..\\..\\..\\Main\\Fichiers\\Plateaux");
+                        Console.WriteLine("A partir de quel fichier voulez vous ouvrir le plateau ?");
+                        for (int i = 1; i <= files.Length; i++)
+                            Console.WriteLine(i + ". " + files[i - 1].Split("\\")[6]);
+                        do
+                        {
+                            number = true;
+                            try
+                            {
+                                fichier = int.Parse(Console.ReadLine());
+                                if (fichier > files.Length) { Console.WriteLine("Veuillez entrez un nombre inférieur ou égal à " + files.Length); number = false; }
+                                if (fichier < 1) { Console.WriteLine("Veuillez entrez un nombre supérieur ou égal à " + 1); number = false; }
+                            }
+                            catch (FormatException) { number = false; Console.WriteLine("Veuillez entrer un nombre ! "); }
+                            catch (OverflowException) { number = false; Console.WriteLine("Veuillez entrer un nombre inférieur au nombre de fichier ! "); }
+                            catch (ArgumentNullException ex) { number = false; Console.Write(ex); }
+                        } while (!number);
+                        p = new Plateau(files[fichier - 1]);
+                        Console.Clear();
+                        Console.WriteLine("Le plateau sera donc ouvert à partir du fichier " + files[fichier - 1].Split("\\")[6] + " !");
+                    }
                     else Console.WriteLine("Réponse incorrecte");
                 } while (rep != "1" && rep != "2" && !sortir);
+                
                 if (!sortir)
                 {
                     //Choix du mode de jeu
-                    Console.WriteLine("Notre jeu propose un mode de jeu alternatif appelé \"Mode portail\".\nC'est un mode de jeu permettant de considérer les bords du plateau comme des portails vers les bords opposés." +
+                    Console.WriteLine("\nNotre jeu propose un mode de jeu alternatif appelé \"Mode portail\".\nC'est un mode de jeu permettant de considérer les bords du plateau comme des portails vers les bords opposés." +
                         "\nSouhaite-vous l'activer ? y/n");
                     bool modePortail = false;
                     do

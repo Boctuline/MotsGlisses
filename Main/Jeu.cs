@@ -85,10 +85,12 @@ namespace MotsGlisses
                 try
                 {
                     if (rep.ToLower() != "d") temps = int.Parse(rep);
-                    if (temps > 59 ) { Console.WriteLine(type?"59 secondes maximum !":"59 minutes maximum !"); repeat = true; }
+                    if (temps > 59) { Console.WriteLine(type?"59 secondes maximum !":"59 minutes maximum !"); repeat = true; }
+                    if (temps < 0) { Console.WriteLine("Entrez un nombre positif"); repeat = true; }
                 }
                 catch (FormatException) { Console.WriteLine("Veuillez taper un nombre"); repeat = true; }
                 catch (OverflowException) { Console.WriteLine("Veuillez taper un temps plus petit"); repeat = true; }
+                catch (ArgumentNullException ex) { Console.Write(ex); repeat = true; }
             } while (repeat);
             return temps;
         }
