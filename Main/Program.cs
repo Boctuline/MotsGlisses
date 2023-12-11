@@ -48,6 +48,7 @@ namespace MotsGlisses
                     "\n2. Plateau à partir d'un fichier" +
                     "\n3. Sortir");
                 string rep;
+                
                 Plateau p = null;
                 do
                 {

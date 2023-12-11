@@ -21,8 +21,8 @@ namespace MotsGlisses
             Joueur jactuel = j2;
             Console.Write("Combien de temps avant la fin du jeu ? 59mn maximum. (Tapez \"d\" pour le temps par défaut de 5mn.)\nEn minutes : ");
             minutes = DemandeTimer(5);
-            Console.Write("La partie durera donc " + minutes + " minutes !\nCombien de temps par tour ? 59mn et 59s maximum. (Tapez \"d\" pour le temps par défaut de 0mn30s.)\nEn minutes : ");
-            minutesTour = DemandeTimer(0);
+            Console.Write("La partie durera donc " + minutes + " minutes !\nCombien de temps par tour ? "+ (minutes-1) +"mn et 59s maximum. (Tapez \"d\" pour le temps par défaut de 0mn30s.)\nEn minutes : ");
+            minutesTour = DemandeTimer(0, false, minutes-1);
             Console.Write("Et en secondes ? : ");
             secondesTour = DemandeTimer(30, true);
             Titre();
@@ -79,7 +79,7 @@ namespace MotsGlisses
             Console.WriteLine(j1.toString() + "\n" +j2.toString());
             Console.Write("C'est donc "); Console.WriteLine(j1.Score>j2.Score?j1.Nom + " qui gagne !" : j2.Nom + " qui gagne !");
         }
-        public static int DemandeTimer(int temps, bool type = false)
+        public static int DemandeTimer(int temps, bool type = false, int minutes = 59)
         {
             bool repeat;
             do
@@ -89,7 +89,7 @@ namespace MotsGlisses
                 try
                 {
                     if (rep.ToLower() != "d") temps = int.Parse(rep);
-                    if (temps > 59) { Console.WriteLine(type?"59 secondes maximum !":"59 minutes maximum !"); repeat = true; }
+                    if (temps > minutes) { Console.WriteLine(type?"59 secondes maximum !": minutes + " minutes maximum !"); repeat = true; }
                     if (temps < 0) { Console.WriteLine("Entrez un nombre positif"); repeat = true; }
                 }
                 catch (FormatException) { Console.WriteLine("Veuillez taper un nombre"); repeat = true; }
