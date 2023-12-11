@@ -48,9 +48,9 @@ namespace MotsGlisses
                     //Réponse du joueur
                     rep = Console.ReadLine();
                     TimeSpan restantTour = new TimeSpan(0, minutesTour, secondesTour) - (DateTime.Now - debutTour);
-                    else if (rep.ToLower() == "skip") { Titre(); plateau.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
+                    if (rep.ToLower() == "skip") { Titre(); plateau.Afficher(); Console.WriteLine(jactuel.Nom + ", vous avez décider de passer ce tour."); }
                     else if (rep.ToLower() == "exit") { debut = DateTime.Now  - new TimeSpan(2,0,0); }
-                    if (restantTour < new TimeSpan(0, 0, 0)) { Titre(); plateau.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
+                    else if (restantTour < new TimeSpan(0, 0, 0)) { Titre(); plateau.Afficher(); Console.WriteLine(restantTour.Minutes > 0 ? "Temps écoulé ! Vous avez pris " + -restantTour.Minutes + " minutes et " + -restantTour.Seconds + " secondes de trop!" : "Temps écoulé ! Vous avez pris " + -restantTour.Seconds + " secondes de trop!"); }
                     else if(!dictionnaire.RechDichoRecursif(rep) && rep.ToLower() != "gilles nocturne") { Titre(); plateau.Afficher(); Console.WriteLine(rep + " n'est pas un mot " + dictionnaire.Langue + " !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (rep.Length < 2) { Titre(); plateau.Afficher(); Console.WriteLine("Vous devez proposer un mot d'au moins 2 lettre !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
                     else if (jactuel.Contient(rep.ToLower())) { Titre(); plateau.Afficher(); Console.WriteLine("Vous avez déjà trouvé ce mot !\n" + jactuel.Nom + ", il vous reste " + restantTour.Minutes + " minutes et " + restantTour.Seconds + " secondes.\nEntrez un mot à nouveau."); repeat = true; }
