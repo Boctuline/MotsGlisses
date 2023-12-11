@@ -18,7 +18,7 @@ namespace MotsGlisses
             line[5] = " |  _/ _` | '_| \\__ \\ ' \\| | || / _` | '  \\  / -_)  _| | || / _` | | '  \\/ -_) / _` | || |   | | | |) | | _| \r\n";
             line[6] = " |_| \\__,_|_|   |___/_||_|_|\\_, \\__,_|_|_|_| \\___|\\__|  \\__/\\__,_|_|_|_|_\\___| \\__,_|\\_,_|   |_| |___/  |_|  \r\n";
             line[7] = "                            |__/                                                                             \r\n";
-            string intro;
+            string intro = "";
             bool sortir = false;
             while (!sortir)
             {
@@ -52,8 +52,20 @@ namespace MotsGlisses
                 do
                 {
                     rep = Console.ReadLine();
+
+                    //Si l'utilisateur veut s'en aller
                     if (rep == "3") { Console.WriteLine("Au revoir !"); sortir = true; }
-                    else if (rep == "1") { p = new Plateau(); Console.Clear(); Console.WriteLine("Le plateau a été généré aléatoirement !"); }
+
+                    //Plateau généré aléatoirement
+                    else if (rep == "1") { 
+                        p = new Plateau(); 
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine(intro);
+                        Console.ForegroundColor = ConsoleColor.White; 
+                        Console.WriteLine("Le plateau a été généré aléatoirement !"); }
+                    
+                    //Plateau à partir de fichier
                     else if (rep == "2")
                     {
                         int fichier = 0;
@@ -77,6 +89,9 @@ namespace MotsGlisses
                         } while (!number);
                         p = new Plateau(files[fichier - 1]);
                         Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine(intro);
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Le plateau sera donc ouvert à partir du fichier " + files[fichier - 1].Split("\\")[6] + " !");
                     }
                     else Console.WriteLine("Réponse incorrecte");
@@ -105,8 +120,13 @@ namespace MotsGlisses
                     Joueur j2 = new Joueur(rep);
 
                     //Lancement du jeu
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(intro);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Parlons timer maintenant !");
                     Jeu jeu = new Jeu(p, j1, j2, dictionnaire, modePortail);
-                    Console.WriteLine("Voulez vous lancer une nouvelle partie ? y/n");
+                    Console.WriteLine("Voulez vous relancer une nouvelle partie ? y/n");
                     do
                     {
                         rep = Console.ReadLine().ToLower();
