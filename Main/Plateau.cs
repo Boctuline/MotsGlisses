@@ -48,7 +48,7 @@ namespace MotsGlisses
                     lettre = lettres[r.Next(lettres.Count)];
                     if (!lettresOcc.Contains(lettre)) while (lettres.Contains(lettre)) lettres.Remove(lettre);
                     plateau[i, j] = lettre;
-                    lettresOcc.Remove(plateau[i, j]);
+                    if (lettresOcc.Contains(lettre)) lettresOcc.Remove(plateau[i, j]);
                 }
             }
         }
