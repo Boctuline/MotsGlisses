@@ -42,6 +42,14 @@ namespace MotsGlisses
     
       
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
+        public string toString(char a)
+        {
+            int al = 0;
+            foreach(List<string> compte in dictionnaire)
+            {
+                al= al+ compte.Count;
+            }
+            string result = "La lettre " + a + "contient " + "mots et est en français.";
         public string ToString(char a)
         {
             
