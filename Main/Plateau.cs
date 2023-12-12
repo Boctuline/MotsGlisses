@@ -167,7 +167,7 @@ namespace MotsGlisses
         {
             mot = mot.ToLower();
             List<Case> cases = null;
-            if (mot == "gilles nocturne")
+            if (mot == "gilles nocture")
             {
                 List<Case> list = new List<Case>();
                 for(int i = 0;i < mot.Length;i++)
