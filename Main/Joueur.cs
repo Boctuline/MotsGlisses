@@ -27,6 +27,10 @@ namespace MotsGlisses
 		{
 			get { return score; }
 		}
+		public List<string> MotsTrouves
+		{
+			get { return motsTrouves;}
+		}
 		//Méthodes
 		public void Add_Mot (string mot)
 		{
