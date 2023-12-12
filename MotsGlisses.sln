@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotsGlisses", "MotsGlisses.csproj", "{6D5FCBB6-99B5-4517-9EEC-207217ADD06A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotsGlisses", "MotsGlisses.csproj", "{6D5FCBB6-99B5-4517-9EEC-207217ADD06A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotsGlissesTestUnit", "..\MotsGlissesTestUnit\MotsGlissesTestUnit.csproj", "{7FF4EF8D-FB11-4FD2-94B7-29429C67F7BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6D5FCBB6-99B5-4517-9EEC-207217ADD06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5FCBB6-99B5-4517-9EEC-207217ADD06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D5FCBB6-99B5-4517-9EEC-207217ADD06A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF4EF8D-FB11-4FD2-94B7-29429C67F7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF4EF8D-FB11-4FD2-94B7-29429C67F7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF4EF8D-FB11-4FD2-94B7-29429C67F7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF4EF8D-FB11-4FD2-94B7-29429C67F7BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

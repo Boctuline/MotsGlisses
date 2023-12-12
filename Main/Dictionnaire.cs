@@ -1,18 +1,31 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace MotsGlisses
 {
 
     public class Dictionnaire
     {
-        public Dictionnaire(string nameFile)
+        List<List<string>> dico;
+        string langue;
+        public List<List<string>> Dico
         {
-            List<List<string>> dictionnaire = new List<List<string>>();
+            get { return dico; }
+            set { this.dico = value; }
+        }
+        public string Langue
+        {
+            get { return langue; }
+            set { this.langue = value; }
+        }
+        public Dictionnaire(string nameFile, string langue)
+        {
+            this.langue = langue;
+            dico = new List<List<string>>();
             StreamReader sReader = null;
-
             try
             {
                 sReader = new StreamReader(nameFile);
@@ -26,7 +39,7 @@ namespace MotsGlisses
                     {
                         ligne.Add(mot);
                     }
-                    dictionnaire.Add(ligne);
+                    dico.Add(ligne);
                 }
 
             }
@@ -39,71 +52,105 @@ namespace MotsGlisses
                 if (sReader != null) { sReader.Close(); }
             }
         }
-    
-      
+
+
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
-        /*public string toString(char a)
+        public string toString()
         {
-            int al = 0;
-            foreach(List<string> compte in dictionnaire)
+            string description ="";
+            foreach (List<string> lettre in dico)
             {
-                al= al+ compte.Count;
+                description+="La lettre : " + lettre[0][0] + " possède " + lettre.Count + " mots";
             }
-            string result = "La lettre " + a + "contient " + "mots et est en français.";
-        public string ToString(char a)
-        {
-            
-            string result = "La lettre "+a+"contient " +"mots et est en français.";
-            return result;
+            description += "\nLe dictionnaire est en " + this.langue;
+            return description;
         }
-        public bool RechDichRecursif(string mot)
+
+
+        public void Tri_Fusion_Reccursif(List<string> liste)
         {
+            if (liste.Count <= 1)
+                return;
+
+            int millieu = liste.Count / 2;
+            List<string> gauche = new List<string>();
+            List<string> droite = new List<string>();
+
+            for (int i = 0; i < millieu; i++)
+                gauche.Add(liste[i]);
+
+            for (int i = millieu; i < liste.Count; i++)
+                droite.Add(liste[i]);
+
+            Tri_Fusion_Reccursif(gauche);
+            Tri_Fusion_Reccursif(droite);
+
+            Fusion(liste, gauche, droite);
+        }
+
+        public void Fusion(List<string> liste, List<string> gauche, List<string> droite)
+        {
+            int indexGauche = 0, indexDroite = 0, indexResultat = 0;
+
+            while (indexGauche < gauche.Count && indexDroite < droite.Count)
+            {
+                if (string.Compare(gauche[indexGauche], droite[indexDroite]) < 0)
+                {
+                    liste[indexResultat] = gauche[indexGauche];
+                    indexGauche++;
+                }
+                else
+                {
+                    liste[indexResultat] = droite[indexDroite];
+                    indexDroite++;
+                }
+                indexResultat++;
+            }
+
+            while (indexGauche < gauche.Count)
+            {
+                liste[indexResultat] = gauche[indexGauche];
+                indexGauche++;
+                indexResultat++;
+            }
+
+            while (indexDroite < droite.Count)
+            {
+                liste[indexResultat] = droite[indexDroite];
+                indexDroite++;
+                indexResultat++;
+            }
+        }
+
+        public bool RechDichoRecursif(string word)
+        {
+            word = word.ToUpper();
+            foreach (List<string> sousListe in this.dico)
+            {
+                if (Dichotomie(sousListe, word, 0, sousListe.Count - 1))
+                {
+                    return true;
+                }
+            }
             return false;
         }
-        public static bool RechercheDichotomique(string[] tableau, string motRecherche)
+
+        public bool Dichotomie(List<string> list, string mot_cherche, int debut, int fin)
         {
-            // Vérifie si le tableau est trié
-            Array.Sort(tableau);
+            if (fin >= debut)
+            {
+                int millieu = debut + (fin - debut) / 2;
 
-            int min = 0;
-            int max = tableau.Length - 1;
+                if (list[millieu] == mot_cherche)
+                    return true;
 
-            return RechercheDichotomiqueRecursive(tableau, motRecherche, min, max);
+                if (string.Compare(list[millieu], mot_cherche) > 0)
+                    return Dichotomie(list, mot_cherche, debut, millieu - 1);
+
+                return Dichotomie(list, mot_cherche, millieu + 1, fin);
+            }
+
+            return false;
         }
-
-        private static bool RechercheDichotomiqueRecursive(string[][] tableau, string motRecherche, int min, int max)
-        {
-            if (tableau == null )
-            {
-                return false;
-            }
-            if (tableau.Length == 0)
-            {
-                return false;
-            }
-
-            int milieu = (tableau.Length) / 2;
-
-            int comparison = string.Compare(tableau[milieu], motRecherche);
-
-            if (comparison == 0)
-            {
-                return true; 
-            }
-            else if (comparison > 0)
-            {
-                return RechercheDichotomiqueRecursive(tableau, motRecherche, min, milieu - 1);
-            }
-            else
-            {
- 
-                return RechercheDichotomiqueRecursive(tableau, motRecherche, milieu + 1, max);
-            }
-        }
-
-        public void Tri_Fusion()
-        {
-
-        }*/
     }
 }
