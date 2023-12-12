@@ -42,7 +42,7 @@ namespace MotsGlisses
     
       
         // Méthode pour afficher le dictionnaire (nombre de mots par lettre et langue)
-        public string toString(char a)
+        /*public string toString(char a)
         {
             int al = 0;
             foreach(List<string> compte in dictionnaire)
@@ -104,6 +104,6 @@ namespace MotsGlisses
         public void Tri_Fusion()
         {
 
-        }
+        }*/
     }
 }
